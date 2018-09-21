@@ -1,0 +1,86 @@
+{
+   bound_relative_root: {
+      x: 0.5,
+      y: 0,
+      z: 0.5,
+   },
+   materials: [
+      {
+         name: "T",
+         parameters: [
+            {
+               baseColor: "plasma generator tau- (2)",
+            },
+            {
+               baseColorTint: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               metallic: 0,
+            },
+            {
+               roughness: 1,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/obj_material.sfm",
+      },
+      {
+         name: "Mat",
+         parameters: [
+            {
+               baseColor: "plasma generator tau- (1)",
+            },
+            {
+               baseColorTint: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               metallic: 0,
+            },
+            {
+               roughness: 1,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/obj_material.sfm",
+      },
+   ],
+   model: {
+      attributes: [
+         "Position",
+         "TexCoord",
+         "Orientation",
+      ],
+      collision: {},
+      file: "sampledata/models/generator/plasma generator.obj",
+      name: "plasma generator",
+      recenter: "root",
+      scale: 0.019203999999999999,
+   },
+   samplers: [
+      {
+         file: "sampledata/models/generator/plasma generator tau- (1).jpg",
+         name: "plasma generator tau- (1)",
+         pipeline_name: "plasma generator tau- (1).jpg",
+      },
+      {
+         file: "sampledata/models/generator/plasma generator tau- (2).jpg",
+         name: "plasma generator tau- (2)",
+         pipeline_name: "plasma generator tau- (2).jpg",
+      },
+   ],
+   version: "0.52:1",
+}

@@ -1,0 +1,9 @@
+# Exported from 3D Builder
+
+newmtl T
+Kd 1.000000 1.000000 1.000000
+map_Kd plasma generator tau- (2).jpg
+
+newmtl Mat
+Kd 1.000000 1.000000 1.000000
+map_Kd plasma generator tau- (1).jpg
