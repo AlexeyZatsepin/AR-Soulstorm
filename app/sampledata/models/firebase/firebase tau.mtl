@@ -1,0 +1,13 @@
+# Exported from 3D Builder
+
+newmtl Mat_1
+Kd 1.000000 1.000000 1.000000
+map_Kd FIREBASE tau (1).jpg
+
+newmtl T
+Kd 1.000000 1.000000 1.000000
+map_Kd FIREBASE tau (2).jpg
+
+newmtl Mat
+Kd 1.000000 1.000000 1.000000
+map_Kd FIREBASE tau (3).jpg

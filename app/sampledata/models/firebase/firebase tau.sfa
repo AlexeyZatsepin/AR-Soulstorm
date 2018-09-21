@@ -1,0 +1,117 @@
+{
+   bound_relative_root: {
+      x: 0.5,
+      y: 0,
+      z: 0.5,
+   },
+   materials: [
+      {
+         name: "Mat_1",
+         parameters: [
+            {
+               baseColor: "FIREBASE tau (1)",
+            },
+            {
+               baseColorTint: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               metallic: 0,
+            },
+            {
+               roughness: 1,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/obj_material.sfm",
+      },
+      {
+         name: "T",
+         parameters: [
+            {
+               baseColor: "FIREBASE tau (2)",
+            },
+            {
+               baseColorTint: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               metallic: 0,
+            },
+            {
+               roughness: 1,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/obj_material.sfm",
+      },
+      {
+         name: "Mat",
+         parameters: [
+            {
+               baseColor: "FIREBASE tau (3)",
+            },
+            {
+               baseColorTint: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               metallic: 0,
+            },
+            {
+               roughness: 1,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/obj_material.sfm",
+      },
+   ],
+   model: {
+      attributes: [
+         "Position",
+         "TexCoord",
+         "Orientation",
+      ],
+      collision: {},
+      file: "sampledata/models/firebase/firebase tau.obj",
+      name: "firebase tau",
+      recenter: "root",
+      scale: 0.01115,
+   },
+   samplers: [
+      {
+         file: "sampledata/models/firebase/FIREBASE tau (3).jpg",
+         name: "FIREBASE tau (3)",
+         pipeline_name: "FIREBASE tau (3).jpg",
+      },
+      {
+         file: "sampledata/models/firebase/FIREBASE tau (2).jpg",
+         name: "FIREBASE tau (2)",
+         pipeline_name: "FIREBASE tau (2).jpg",
+      },
+      {
+         file: "sampledata/models/firebase/FIREBASE tau (1).jpg",
+         name: "FIREBASE tau (1)",
+         pipeline_name: "FIREBASE tau (1).jpg",
+      },
+   ],
+   version: "0.52:1",
+}

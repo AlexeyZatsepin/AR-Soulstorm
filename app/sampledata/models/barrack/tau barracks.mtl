@@ -1,0 +1,9 @@
+# Exported from 3D Builder
+
+newmtl barrack_tau_2
+Kd 1.000000 1.000000 1.000000
+map_Kd tau barrack 2.jpg
+
+newmtl barrack_tau
+Kd 1.000000 1.000000 1.000000
+map_Kd tau barrack 1.jpg

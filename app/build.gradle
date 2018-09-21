@@ -49,3 +49,23 @@ sceneform.asset('sampledata/models/generator/plasma generator.obj',
         'default',
         'sampledata/models/generator/plasma generator.sfa',
         'src/main/res/raw/plasmagenerator')
+
+sceneform.asset('sampledata/models/barrack/tau barracks.obj',
+        'default',
+        'sampledata/models/barrack/tau barracks.sfa',
+        'src/main/res/raw/taubarracks')
+
+sceneform.asset('sampledata/models/defense/tau defense.obj',
+        'default',
+        'sampledata/models/defense/tau defense.sfa',
+        'src/main/res/raw/taudefense')
+
+sceneform.asset('sampledata/models/firebase/firebase tau.obj',
+        'default',
+        'sampledata/models/firebase/firebase tau.sfa',
+        'src/main/res/raw/firebasetau')
+
+sceneform.asset('sampledata/models/void/void illumitus.obj',
+        'default',
+        'sampledata/models/void/void illumitus.sfa',
+        'src/main/res/raw/voidillumitus')

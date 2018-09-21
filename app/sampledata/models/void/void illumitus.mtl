@@ -1,0 +1,9 @@
+# Exported from 3D Builder
+
+newmtl T
+Kd 1.000000 1.000000 1.000000
+map_Kd Tau Voie illu-1.jpg
+
+newmtl T_1
+Kd 1.000000 1.000000 1.000000
+map_Kd Tau Voie illu-2.jpg
