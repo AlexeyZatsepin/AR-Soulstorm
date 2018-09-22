@@ -1,4 +1,4 @@
-package com.google.ar.sceneform.samples.hellosceneform;
+package org.rooms.ar.soulstrom;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.support.annotation.RawRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +20,10 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
+import org.rooms.ar.soulstorm.R;
+
+import java.util.function.Consumer;
+
 /**
  * This is an example activity that uses the Sceneform UX package to make common AR tasks easier.
  */
@@ -27,7 +32,11 @@ public class ARActivity extends AppCompatActivity {
   private static final double MIN_OPENGL_VERSION = 3.0;
 
   private ArFragment arFragment;
-  private ModelRenderable renderable;
+  private ModelRenderable generatorRendarable;
+  private ModelRenderable defenseRendarable;
+  private ModelRenderable firebaseRendarable;
+  private ModelRenderable barrackRendarable;
+  private ModelRenderable voidRendarable;
 
   @Override
   @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -43,24 +52,15 @@ public class ARActivity extends AppCompatActivity {
     setContentView(R.layout.activity_ux);
     arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
-    // When you build a Renderable, Sceneform loads its resources in the background while returning
-    // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
-    ModelRenderable.builder()
-        .setSource(this, R.raw.plasmagenerator)
-        .build()
-        .thenAccept(renderable -> this.renderable = renderable)
-        .exceptionally(
-            throwable -> {
-              Toast toast =
-                  Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
-              toast.setGravity(Gravity.CENTER, 0, 0);
-              toast.show();
-              return null;
-            });
+    initModel(R.raw.plasmagenerator, r -> this.generatorRendarable = r);
+    initModel(R.raw.taudefense, r -> this.defenseRendarable = r);
+    initModel(R.raw.taubarracks, r -> this.barrackRendarable = r);
+    initModel(R.raw.firebasetau, r -> this.firebaseRendarable = r);
+    initModel(R.raw.voidillumitus, r -> this.voidRendarable = r);
 
     arFragment.setOnTapArPlaneListener(
         (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-          if (renderable == null) {
+          if (generatorRendarable == null) {
             return;
           }
 
@@ -72,9 +72,26 @@ public class ARActivity extends AppCompatActivity {
           // Create the transformable andy and add it to the anchor.
           TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
           andy.setParent(anchorNode);
-          andy.setRenderable(renderable);
+          andy.setRenderable(generatorRendarable);
           andy.select();
         });
+  }
+
+  private void initModel(@RawRes int resId, Consumer<ModelRenderable> action){
+      // When you build a Renderable, Sceneform loads its resources in the background while returning
+      // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
+      ModelRenderable.builder()
+              .setSource(this, resId)
+              .build()
+              .thenAccept(action)
+              .exceptionally(
+                      throwable -> {
+                          Toast toast =
+                                  Toast.makeText(this, "Unable to load generatorRendarable", Toast.LENGTH_LONG);
+                          toast.setGravity(Gravity.CENTER, 0, 0);
+                          toast.show();
+                          return null;
+                      });
   }
 
   /**
