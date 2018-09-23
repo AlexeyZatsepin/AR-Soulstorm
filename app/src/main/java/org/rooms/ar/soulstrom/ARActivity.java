@@ -24,9 +24,7 @@ import org.rooms.ar.soulstorm.R;
 
 import java.util.function.Consumer;
 
-/**
- * This is an example activity that uses the Sceneform UX package to make common AR tasks easier.
- */
+
 public class ARActivity extends AppCompatActivity {
   private static final String TAG = ARActivity.class.getSimpleName();
   private static final double MIN_OPENGL_VERSION = 3.0;
@@ -86,8 +84,7 @@ public class ARActivity extends AppCompatActivity {
               .thenAccept(action)
               .exceptionally(
                       throwable -> {
-                          Toast toast =
-                                  Toast.makeText(this, "Unable to load generatorRendarable", Toast.LENGTH_LONG);
+                          Toast toast = Toast.makeText(this, "Unable to load rendarable", Toast.LENGTH_LONG);
                           toast.setGravity(Gravity.CENTER, 0, 0);
                           toast.show();
                           return null;
