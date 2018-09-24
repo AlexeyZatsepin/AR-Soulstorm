@@ -11,8 +11,8 @@
         style="@style/MenuButton"/>
 
     <TextView
-        android:id="@+id/raiting"
-        android:text="@string/raiting"
+        android:id="@+id/rating"
+        android:text="@string/rating"
         style="@style/MenuButton"/>
 
     <TextView

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
+import com.google.ar.core.Session;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
@@ -32,7 +34,7 @@ import com.google.ar.sceneform.ux.TransformableNode;
 import org.rooms.ar.soulstorm.BuildConfig;
 import org.rooms.ar.soulstorm.R;
 
-public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
+public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener, View.OnClickListener {
     private static final String TAG = ARActivity.class.getSimpleName();
 
     private ArFragment arFragment;
@@ -79,6 +81,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                 .thenAccept(
                         (renderable) -> {
                             LinearLayout ll = (LinearLayout) renderable.getView();
+                            ll.setOnClickListener(ARActivity.this);
                             node.setRenderable(renderable);
                         })
                 .exceptionally(
@@ -108,8 +111,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                         .getGlEsVersion();
         if (Double.parseDouble(openGlVersionString) < BuildConfig.MIN_OPENGL_VERSION) {
             Log.e(TAG, "Sceneform requires OpenGL ES 3.0 later");
-            Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG).show();
             activity.finish();
             return false;
         }
@@ -136,5 +138,20 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     transformableNode.select();
                 });
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.start:
+                break;
+            case R.id.rating:
+                break;
+            case R.id.about:
+                break;
+            case R.id.exit:
+                finish();
+                break;
+        }
     }
 }

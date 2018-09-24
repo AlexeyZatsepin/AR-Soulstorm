@@ -3,6 +3,6 @@
     <string name="app_name">AR Soulstorm</string>
     <string name="exit">Exit</string>
     <string name="about">About</string>
-    <string name="raiting">Raiting</string>
+    <string name="rating">Rating</string>
     <string name="start">Start</string>
 </resources>
