@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/start"
+        android:text="Start"
+        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_button"/>
+
+    <TextView
+        android:id="@+id/start1"
+        android:text="Reset"
+        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_button"/>
+
+    <TextView
+        android:id="@+id/start2"
+        android:text="Raiting"
+        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_button"/>
+
+    <TextView
+        android:id="@+id/exit"
+        android:text="Exit"
+        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_button"/>
+</LinearLayout>
