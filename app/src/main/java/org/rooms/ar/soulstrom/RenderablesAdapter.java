@@ -30,13 +30,13 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         void onSelect(ModelRenderable renderable);
     }
 
-    public RenderablesAdapter(ARActivity activity){
+    public RenderablesAdapter(ARActivity activity) {
         this.listener = activity;
-        data.add(new RenderableInfo(R.drawable.firebase,"Firebase","About", R.raw.firebasetau, activity));
-        data.add(new RenderableInfo(R.drawable.defense,"Defense","About", R.raw.taudefense, activity));
-        data.add(new RenderableInfo(R.drawable.barrack,"Barrack","About", R.raw.taubarracks, activity));
-        data.add(new RenderableInfo(R.drawable.station,"Station","About", R.raw.voidillumitus, activity));
-        data.add(new RenderableInfo(R.drawable.generator,"Generator","About", R.raw.plasmagenerator, activity));
+        data.add(new RenderableInfo(R.drawable.firebase, "Firebase", "About", R.raw.firebasetau, activity));
+        data.add(new RenderableInfo(R.drawable.defense, "Defense", "About", R.raw.taudefense, activity));
+        data.add(new RenderableInfo(R.drawable.barrack, "Barrack", "About", R.raw.taubarracks, activity));
+        data.add(new RenderableInfo(R.drawable.station, "Station", "About", R.raw.voidillumitus, activity));
+        data.add(new RenderableInfo(R.drawable.generator, "Generator", "About", R.raw.plasmagenerator, activity));
     }
 
     @NonNull
@@ -80,7 +80,8 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
     }
 
     public class RenderableInfo {
-        @DrawableRes int image;
+        @DrawableRes
+        int image;
         String title;
         String description;
         ModelRenderable rendarable;
@@ -92,7 +93,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
             initModel(resId, context);
         }
 
-        private void initModel(@RawRes int resId, Context context){
+        private void initModel(@RawRes int resId, Context context) {
             // When you build a Renderable, Sceneform loads its resources in the background while returning
             // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
             ModelRenderable.builder()

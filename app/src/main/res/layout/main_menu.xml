@@ -7,37 +7,21 @@
 
     <TextView
         android:id="@+id/start"
-        android:text="Start"
-        android:layout_margin="10dp"
-        android:layout_width="100dp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_button"/>
+        android:text="@string/start"
+        style="@style/MenuButton"/>
 
     <TextView
-        android:id="@+id/start1"
-        android:text="Reset"
-        android:layout_margin="10dp"
-        android:layout_width="100dp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_button"/>
+        android:id="@+id/raiting"
+        android:text="@string/raiting"
+        style="@style/MenuButton"/>
 
     <TextView
-        android:id="@+id/start2"
-        android:text="Raiting"
-        android:layout_margin="10dp"
-        android:layout_width="100dp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_button"/>
+        android:id="@+id/about"
+        android:text="@string/about"
+        style="@style/MenuButton"/>
 
     <TextView
         android:id="@+id/exit"
-        android:text="Exit"
-        android:layout_margin="10dp"
-        android:layout_width="100dp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_button"/>
+        android:text="@string/exit"
+        style="@style/MenuButton"/>
 </LinearLayout>

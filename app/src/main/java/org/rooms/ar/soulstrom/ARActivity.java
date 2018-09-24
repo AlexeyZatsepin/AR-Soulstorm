@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.google.ar.core.Anchor;
 import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
@@ -32,88 +33,88 @@ import org.rooms.ar.soulstorm.BuildConfig;
 import org.rooms.ar.soulstorm.R;
 
 public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
-  private static final String TAG = ARActivity.class.getSimpleName();
+    private static final String TAG = ARActivity.class.getSimpleName();
 
-  private ArFragment arFragment;
-  private RenderablesAdapter adapter;
-  private BottomSheetBehavior bottomSheetBehavior;
+    private ArFragment arFragment;
+    private RenderablesAdapter adapter;
+    private BottomSheetBehavior bottomSheetBehavior;
 
-  @Override
-  @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-  // CompletableFuture requires api level 24
-  // FutureReturnValueIgnored is not valid
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
+    // CompletableFuture requires api level 24
+    // FutureReturnValueIgnored is not valid
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    if (!checkIsSupportedDeviceOrFinish(this)) {
-      return;
-    }
-
-    setContentView(R.layout.activity_ux);
-    arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-    RecyclerView recyclerView = findViewById(R.id.recyclerView);
-    adapter = new RenderablesAdapter(this);
-    recyclerView.setAdapter(adapter);
-    recyclerView.setHasFixedSize(true);
-    bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
-    arFragment.getArSceneView().getScene().addOnUpdateListener(new Scene.OnUpdateListener() {
-        @Override
-        public void onUpdate(FrameTime frameTime) {
-            initMenu();
-            arFragment.getArSceneView().getScene().removeOnUpdateListener(this);
+        if (!checkIsSupportedDeviceOrFinish(this)) {
+            return;
         }
-    });
-  }
 
-  private void initMenu() {
-      Frame frame = arFragment.getArSceneView().getArFrame();
-      Pose pose = frame.getCamera().getPose().compose(Pose.makeTranslation(0.00f, -0.4f, -1f));
-      Node node = new Node();
-      node.setParent(arFragment.getArSceneView().getScene());
-      float[] v3 = pose.getTranslation();
-      node.setLocalPosition(new Vector3(v3[0],v3[1],v3[2]));
-      ViewRenderable.builder()
-              .setView(getApplicationContext(), R.layout.main_menu)
-              .build()
-              .thenAccept(
-                      (renderable) -> {
-                          LinearLayout ll = (LinearLayout) renderable.getView();
-                          node.setRenderable(renderable);
-                      })
-              .exceptionally(
-                      (throwable) -> {
-                          throw new AssertionError("Could not load plane card view.", throwable);
-                      });
-  }
+        setContentView(R.layout.activity_ux);
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        adapter = new RenderablesAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
+        arFragment.getArSceneView().getScene().addOnUpdateListener(new Scene.OnUpdateListener() {
+            @Override
+            public void onUpdate(FrameTime frameTime) {
+                initMenu();
+                arFragment.getArSceneView().getScene().removeOnUpdateListener(this);
+            }
+        });
+    }
 
-  /**
-   * Returns false and displays an error message if Sceneform can not run, true if Sceneform can run
-   * on this device.
-   *
-   * <p>Sceneform requires Android N on the device as well as OpenGL 3.0 capabilities.
-   *
-   * <p>Finishes the activity if Sceneform can not run
-   */
-  public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
-    if (Build.VERSION.SDK_INT < VERSION_CODES.N) {
-      Log.e(TAG, "Sceneform requires Android N or later");
-      Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();
-      activity.finish();
-      return false;
+    private void initMenu() {
+        Frame frame = arFragment.getArSceneView().getArFrame();
+        Pose pose = frame.getCamera().getPose().compose(Pose.makeTranslation(0.00f, -0.4f, -1f));
+        Node node = new Node();
+        node.setParent(arFragment.getArSceneView().getScene());
+        float[] v3 = pose.getTranslation();
+        node.setLocalPosition(new Vector3(v3[0], v3[1], v3[2]));
+        ViewRenderable.builder()
+                .setView(getApplicationContext(), R.layout.main_menu)
+                .build()
+                .thenAccept(
+                        (renderable) -> {
+                            LinearLayout ll = (LinearLayout) renderable.getView();
+                            node.setRenderable(renderable);
+                        })
+                .exceptionally(
+                        (throwable) -> {
+                            throw new AssertionError("Could not load plane card view.", throwable);
+                        });
     }
-    String openGlVersionString =
-        ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
-            .getDeviceConfigurationInfo()
-            .getGlEsVersion();
-    if (Double.parseDouble(openGlVersionString) < BuildConfig.MIN_OPENGL_VERSION) {
-      Log.e(TAG, "Sceneform requires OpenGL ES 3.0 later");
-      Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
-          .show();
-      activity.finish();
-      return false;
+
+    /**
+     * Returns false and displays an error message if Sceneform can not run, true if Sceneform can run
+     * on this device.
+     * <p>
+     * <p>Sceneform requires Android N on the device as well as OpenGL 3.0 capabilities.
+     * <p>
+     * <p>Finishes the activity if Sceneform can not run
+     */
+    public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
+        if (Build.VERSION.SDK_INT < VERSION_CODES.N) {
+            Log.e(TAG, "Sceneform requires Android N or later");
+            Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();
+            activity.finish();
+            return false;
+        }
+        String openGlVersionString =
+                ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
+                        .getDeviceConfigurationInfo()
+                        .getGlEsVersion();
+        if (Double.parseDouble(openGlVersionString) < BuildConfig.MIN_OPENGL_VERSION) {
+            Log.e(TAG, "Sceneform requires OpenGL ES 3.0 later");
+            Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
+                    .show();
+            activity.finish();
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
 
     @Override
     public void onSelect(ModelRenderable renderable) {
@@ -130,7 +131,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     // Create the transformable andy and add it to the anchor.
                     TransformableNode transformableNode = new TransformableNode(arFragment.getTransformationSystem());
                     transformableNode.setParent(anchorNode);
-                    transformableNode.setWorldScale(new Vector3(0.1f,0.1f,0.1f));
+                    transformableNode.setWorldScale(new Vector3(0.1f, 0.1f, 0.1f));
                     transformableNode.setRenderable(renderable);
                     transformableNode.select();
                 });

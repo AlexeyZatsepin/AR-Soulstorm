@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,8 +25,8 @@
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/cardview_light_background"
+        android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="35dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
@@ -37,19 +37,19 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="center"
+            android:gravity="center"
             android:text="="
             android:textColor="@color/cardview_dark_background"
-            android:gravity="center"
             android:textSize="30sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/card_layout"/>
+            tools:listitem="@layout/card_layout" />
 
     </LinearLayout>
 

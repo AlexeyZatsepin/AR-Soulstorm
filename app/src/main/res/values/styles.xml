@@ -1,3 +1,11 @@
 <resources>
   <style name="AppTheme" parent="Theme.AppCompat.Light"/>
+
+  <style name="MenuButton" parent="Base.Widget.AppCompat.AutoCompleteTextView">
+    <item name="android:layout_margin">10dp</item>
+    <item name="android:layout_width">100dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center</item>
+    <item name="android:background">@drawable/menu_button</item>
+  </style>
 </resources>
