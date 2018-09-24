@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     tools:context="org.rooms.ar.soulstrom.ARActivity">
 
-    <include layout="@layout/activity_content"/>
-
     <fragment
         android:id="@+id/ux_fragment"
         android:name="com.google.ar.sceneform.ux.ArFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    
+    <include layout="@layout/activity_content"/>
+    
 </FrameLayout>
