@@ -6,35 +6,37 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.annotation.RawRes;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.google.ar.core.Anchor;
+import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
+import com.google.ar.core.Pose;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.FrameTime;
+import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
+import org.rooms.ar.soulstorm.BuildConfig;
 import org.rooms.ar.soulstorm.R;
 
-import java.util.function.Consumer;
-
-
-public class ARActivity extends AppCompatActivity {
+public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
   private static final String TAG = ARActivity.class.getSimpleName();
-  private static final double MIN_OPENGL_VERSION = 3.0;
 
   private ArFragment arFragment;
-  private ModelRenderable generatorRendarable;
-  private ModelRenderable defenseRendarable;
-  private ModelRenderable firebaseRendarable;
-  private ModelRenderable barrackRendarable;
-  private ModelRenderable voidRendarable;
+  private RenderablesAdapter adapter;
+  private BottomSheetBehavior bottomSheetBehavior;
 
   @Override
   @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -49,45 +51,38 @@ public class ARActivity extends AppCompatActivity {
 
     setContentView(R.layout.activity_ux);
     arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-
-    initModel(R.raw.plasmagenerator, r -> this.generatorRendarable = r);
-    initModel(R.raw.taudefense, r -> this.defenseRendarable = r);
-    initModel(R.raw.taubarracks, r -> this.barrackRendarable = r);
-    initModel(R.raw.firebasetau, r -> this.firebaseRendarable = r);
-    initModel(R.raw.voidillumitus, r -> this.voidRendarable = r);
-
-    arFragment.setOnTapArPlaneListener(
-        (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-          if (generatorRendarable == null) {
-            return;
-          }
-
-          // Create the Anchor.
-          Anchor anchor = hitResult.createAnchor();
-          AnchorNode anchorNode = new AnchorNode(anchor);
-          anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-          // Create the transformable andy and add it to the anchor.
-          TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
-          andy.setParent(anchorNode);
-          andy.setRenderable(generatorRendarable);
-          andy.select();
-        });
+    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    adapter = new RenderablesAdapter(this);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setHasFixedSize(true);
+    bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
+    arFragment.getArSceneView().getScene().addOnUpdateListener(new Scene.OnUpdateListener() {
+        @Override
+        public void onUpdate(FrameTime frameTime) {
+            initMenu();
+            arFragment.getArSceneView().getScene().removeOnUpdateListener(this);
+        }
+    });
   }
 
-  private void initModel(@RawRes int resId, Consumer<ModelRenderable> action){
-      // When you build a Renderable, Sceneform loads its resources in the background while returning
-      // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
-      ModelRenderable.builder()
-              .setSource(this, resId)
+  private void initMenu() {
+      Frame frame = arFragment.getArSceneView().getArFrame();
+      Pose pose = frame.getCamera().getPose().compose(Pose.makeTranslation(0.00f, -0.4f, -1f));
+      Node node = new Node();
+      node.setParent(arFragment.getArSceneView().getScene());
+      float[] v3 = pose.getTranslation();
+      node.setLocalPosition(new Vector3(v3[0],v3[1],v3[2]));
+      ViewRenderable.builder()
+              .setView(getApplicationContext(), R.layout.main_menu)
               .build()
-              .thenAccept(action)
+              .thenAccept(
+                      (renderable) -> {
+                          LinearLayout ll = (LinearLayout) renderable.getView();
+                          node.setRenderable(renderable);
+                      })
               .exceptionally(
-                      throwable -> {
-                          Toast toast = Toast.makeText(this, "Unable to load rendarable", Toast.LENGTH_LONG);
-                          toast.setGravity(Gravity.CENTER, 0, 0);
-                          toast.show();
-                          return null;
+                      (throwable) -> {
+                          throw new AssertionError("Could not load plane card view.", throwable);
                       });
   }
 
@@ -110,7 +105,7 @@ public class ARActivity extends AppCompatActivity {
         ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
             .getDeviceConfigurationInfo()
             .getGlEsVersion();
-    if (Double.parseDouble(openGlVersionString) < MIN_OPENGL_VERSION) {
+    if (Double.parseDouble(openGlVersionString) < BuildConfig.MIN_OPENGL_VERSION) {
       Log.e(TAG, "Sceneform requires OpenGL ES 3.0 later");
       Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
           .show();
@@ -119,4 +114,26 @@ public class ARActivity extends AppCompatActivity {
     }
     return true;
   }
+
+    @Override
+    public void onSelect(ModelRenderable renderable) {
+        arFragment.setOnTapArPlaneListener(
+                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                    if (renderable == null) {
+                        return;
+                    }
+                    // Create the Anchor.
+                    Anchor anchor = hitResult.createAnchor();
+                    AnchorNode anchorNode = new AnchorNode(anchor);
+                    anchorNode.setParent(arFragment.getArSceneView().getScene());
+
+                    // Create the transformable andy and add it to the anchor.
+                    TransformableNode transformableNode = new TransformableNode(arFragment.getTransformationSystem());
+                    transformableNode.setParent(anchorNode);
+                    transformableNode.setWorldScale(new Vector3(0.1f,0.1f,0.1f));
+                    transformableNode.setRenderable(renderable);
+                    transformableNode.select();
+                });
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
 }
