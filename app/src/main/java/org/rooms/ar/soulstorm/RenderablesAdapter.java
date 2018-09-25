@@ -1,17 +1,14 @@
-package org.rooms.ar.soulstrom;
+package org.rooms.ar.soulstorm;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.ar.sceneform.rendering.ModelRenderable;
-
-import org.rooms.ar.soulstorm.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +56,8 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         ImageView imageView;
         TextView titleView;
         TextView descriptionView;
-        Button pin;
-        Button about;
+        TextView pin;
+        TextView about;
 
         RenderableViewHolder(View itemView) {
             super(itemView);

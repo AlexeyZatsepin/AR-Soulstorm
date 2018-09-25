@@ -1,4 +1,4 @@
-package org.rooms.ar.soulstrom;
+package org.rooms.ar.soulstorm;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
@@ -38,13 +38,17 @@ public class Building {
         return rendarable;
     }
 
+    public void setRendarable(ModelRenderable rendarable) {
+        this.rendarable = rendarable;
+    }
+
     private void initModel(@RawRes int resId, Context context) {
         // When you build a Renderable, Sceneform loads its resources in the background while returning
         // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
         ModelRenderable.builder()
                 .setSource(context, resId)
                 .build()
-                .thenAccept(r -> this.rendarable = r)
+                .thenAccept(this::setRendarable)
                 .exceptionally(
                         throwable -> {
                             Toast toast = Toast.makeText(context, "Unable to load rendarable", Toast.LENGTH_LONG);

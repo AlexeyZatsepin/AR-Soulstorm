@@ -8,20 +8,24 @@
     <TextView
         android:id="@+id/start"
         android:text="@string/start"
+        android:background="@drawable/drawable_menu_button_green"
         style="@style/MenuButton"/>
 
     <TextView
         android:id="@+id/rating"
         android:text="@string/rating"
+        android:background="@drawable/drawable_menu_button_yellow"
         style="@style/MenuButton"/>
 
     <TextView
         android:id="@+id/about"
         android:text="@string/about"
+        android:background="@drawable/drawable_menu_button_orange"
         style="@style/MenuButton"/>
 
     <TextView
         android:id="@+id/exit"
         android:text="@string/exit"
+        android:background="@drawable/drawable_menu_button_red"
         style="@style/MenuButton"/>
 </LinearLayout>

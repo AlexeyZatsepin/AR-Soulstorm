@@ -1,4 +1,4 @@
-package org.rooms.ar.soulstrom;
+package org.rooms.ar.soulstorm;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -20,7 +20,6 @@ import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
-import com.google.ar.core.Session;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
@@ -29,10 +28,6 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
-import com.google.ar.sceneform.ux.TransformableNode;
-
-import org.rooms.ar.soulstorm.BuildConfig;
-import org.rooms.ar.soulstorm.R;
 
 public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
     private static final String TAG = ARActivity.class.getSimpleName();

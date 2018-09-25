@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1072325307402",
+    "firebase_url": "https://ar-app-project.firebaseio.com",
+    "project_id": "ar-app-project",
+    "storage_bucket": "ar-app-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072325307402:android:f16a46a52693c303",
+        "android_client_info": {
+          "package_name": "org.rooms.ar.soulstorm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072325307402-b2tnf2c62dunulrujgvgiod77skj79df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOVw28L7X65ADNKOvAxdA14M6za4787Hs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

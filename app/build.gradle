@@ -40,14 +40,19 @@ android {
 dependencies {
     implementation "com.google.ar.sceneform:core:$sceneform_version"
     implementation "com.google.ar.sceneform.ux:sceneform-ux:$sceneform_version"
+
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_version"
     implementation "com.android.support:cardview-v7:$support_version"
     implementation "com.android.support:design:$support_version"
     implementation "com.android.support:recyclerview-v7:$support_version"
+
+    implementation "com.google.firebase:firebase-core:$firebase_version"
+    implementation "com.google.firebase:firebase-auth:$firebase_version"
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
+apply plugin: 'com.google.gms.google-services'
 
 
 sceneform.asset('sampledata/models/generator/plasma generator.obj',
