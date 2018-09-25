@@ -34,7 +34,7 @@ import com.google.ar.sceneform.ux.TransformableNode;
 import org.rooms.ar.soulstorm.BuildConfig;
 import org.rooms.ar.soulstorm.R;
 
-public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener, View.OnClickListener {
+public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
     private static final String TAG = ARActivity.class.getSimpleName();
 
     private ArFragment arFragment;
@@ -81,7 +81,8 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                 .thenAccept(
                         (renderable) -> {
                             LinearLayout ll = (LinearLayout) renderable.getView();
-                            ll.setOnClickListener(ARActivity.this);
+                            ll.findViewById(R.id.start).setOnClickListener(v->Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_LONG).show());
+                            ll.findViewById(R.id.exit).setOnClickListener(v->finish());
                             node.setRenderable(renderable);
                         })
                 .exceptionally(
@@ -130,28 +131,37 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     AnchorNode anchorNode = new AnchorNode(anchor);
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-                    // Create the transformable andy and add it to the anchor.
-                    TransformableNode transformableNode = new TransformableNode(arFragment.getTransformationSystem());
-                    transformableNode.setParent(anchorNode);
-                    transformableNode.setWorldScale(new Vector3(0.1f, 0.1f, 0.1f));
-                    transformableNode.setRenderable(renderable);
-                    transformableNode.select();
+                    // Create the transformable andy and add it to the anchor. (arFragment.getTransformationSystem())
+                    Node node = new Node();
+                    node.setParent(anchorNode);
+                    node.setLocalScale(new Vector3(0.3f, 0.3f, 0.3f));
+                    node.setRenderable(renderable);
+//                    node.select();
+
+                    Node infoCard = new Node();
+                    infoCard.setParent(node);
+                    infoCard.setEnabled(false);
+                    infoCard.setLocalPosition(new Vector3(0.0f, 1f, 0.0f));
+                    infoCard.setLocalScale(new Vector3(2f, 2f, 2f));
+
+                    ViewRenderable.builder()
+                            .setView(getApplicationContext(), R.layout.info_card_layout)
+                            .build()
+                            .thenAccept(
+                                    (r) -> {
+                                        infoCard.setRenderable(r);
+                                        View view = r.getView();
+                                    })
+                            .exceptionally(
+                                    (throwable) -> {
+                                        throw new AssertionError("Could not load info card view.", throwable);
+                                    });
+
+                    node.setOnTapListener((hitTestResult, motionEvent1) -> infoCard.setEnabled(true));
+                    infoCard.setOnTapListener((hitTestResult, motionEvent12) -> infoCard.setEnabled(!infoCard.isEnabled()));
                 });
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.start:
-                break;
-            case R.id.rating:
-                break;
-            case R.id.about:
-                break;
-            case R.id.exit:
-                finish();
-                break;
-        }
-    }
+  
 }
