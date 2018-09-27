@@ -2,4 +2,6 @@
 <resources>
     <color name="colorAccent">#53c1bd</color>
     <color name="colorAccentTint">#2653c1bd</color>
+    <color name="backgroundGradient">#267470</color>
+    <color name="backgroundDrawerGradient">#2B3948</color>
 </resources>

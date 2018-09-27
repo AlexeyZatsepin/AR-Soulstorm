@@ -5,4 +5,10 @@
     <string name="about">About</string>
     <string name="rating">Rating</string>
     <string name="start">Start</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or_create_account_now">or Create account now!</string>
+    <string name="login">Login</string>
 </resources>
