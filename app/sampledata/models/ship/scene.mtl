@@ -1,0 +1,29 @@
+# Exported from 3D Builder
+
+newmtl Tex_0000_0_dds
+Kd 1.000000 1.000000 1.000000
+map_Kd Tex_0000_0_dds_baseColor.png
+
+newmtl Tex_0001_0_dds
+Kd 1.000000 1.000000 1.000000
+map_Kd Tex_0001_0_dds_baseColor.png
+
+newmtl interieur_1
+Kd 1.000000 1.000000 1.000000
+map_Kd interieur_1_baseColor.jpeg
+
+newmtl Tex_0019_0_dds_66
+Kd 1.000000 1.000000 1.000000
+map_Kd Tex_0019_0_dds_66_baseColor.jpeg
+
+newmtl Tex_0018_0_dds_60
+Kd 1.000000 1.000000 1.000000
+map_Kd Tex_0018_0_dds_60_baseColor.jpeg
+
+newmtl Tex_0019_0_dds_61
+Kd 1.000000 1.000000 1.000000
+map_Kd Tex_0019_0_dds_66_baseColor.jpeg
+
+newmtl arriere_porte
+Kd 1.000000 1.000000 1.000000
+map_Kd arriere_porte_baseColor.jpg

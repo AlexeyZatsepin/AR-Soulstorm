@@ -1,0 +1,81 @@
+{
+  materials: [
+    {
+      name: 'T_1',
+      parameters: [
+        {
+          baseColor: 'centre de coalition (1)',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'T',
+      parameters: [
+        {
+          baseColor: 'centre de coalition (2)',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/centre/celouie.obj',
+    name: 'celouie',
+    recenter: 'root',
+    scale: 0.027078999999999999,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/centre/centre de coalition (2).jpg',
+      name: 'centre de coalition (2)',
+      pipeline_name: 'centre de coalition (2).jpg',
+    },
+    {
+      file: 'sampledata/models/centre/centre de coalition (1).jpg',
+      name: 'centre de coalition (1)',
+      pipeline_name: 'centre de coalition (1).jpg',
+    },
+  ],
+  version: '0.52:1',
+}

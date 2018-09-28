@@ -1,0 +1,143 @@
+{
+  materials: [
+    {
+      name: 'Disque_1',
+      parameters: [
+        {
+          baseColor: 'SPATIO PORT TAU plate forme',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'rebord',
+      parameters: [
+        {
+          baseColor: 'SPATIO PORT TAU rebord',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'patioporte-2',
+      parameters: [
+        {
+          baseColor: 'SPATIO PORT TAU-2',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'spatioport-1',
+      parameters: [
+        {
+          baseColor: 'SPATIO PORT TAU-1',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/pad/tau landing pad.obj',
+    name: 'tau landing pad',
+    recenter: 'root',
+    scale: 0.015952000000000001,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/pad/SPATIO PORT TAU-1.jpg',
+      name: 'SPATIO PORT TAU-1',
+      pipeline_name: 'SPATIO PORT TAU-1.jpg',
+    },
+    {
+      file: 'sampledata/models/pad/SPATIO PORT TAU-2.jpg',
+      name: 'SPATIO PORT TAU-2',
+      pipeline_name: 'SPATIO PORT TAU-2.jpg',
+    },
+    {
+      file: 'sampledata/models/pad/SPATIO PORT TAU rebord.jpg',
+      name: 'SPATIO PORT TAU rebord',
+      pipeline_name: 'SPATIO PORT TAU rebord.jpg',
+    },
+    {
+      file: 'sampledata/models/pad/SPATIO PORT TAU plate forme.jpg',
+      name: 'SPATIO PORT TAU plate forme',
+      pipeline_name: 'SPATIO PORT TAU plate forme.jpg',
+    },
+  ],
+  version: '0.52:1',
+}

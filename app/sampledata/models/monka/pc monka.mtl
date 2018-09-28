@@ -1,0 +1,9 @@
+# Exported from 3D Builder
+
+newmtl T_1
+Kd 1.000000 1.000000 1.000000
+map_Kd Pc monka (1).jpg
+
+newmtl T
+Kd 1.000000 1.000000 1.000000
+map_Kd Pc monka (2).jpg

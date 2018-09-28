@@ -1,0 +1,81 @@
+{
+  materials: [
+    {
+      name: 'T_1',
+      parameters: [
+        {
+          baseColor: 'Pc monka (1)',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'T',
+      parameters: [
+        {
+          baseColor: 'Pc monka (2)',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/monka/pc monka.obj',
+    name: 'pc monka',
+    recenter: 'root',
+    scale: 0.017077999999999999,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/monka/Pc monka (2).jpg',
+      name: 'Pc monka (2)',
+      pipeline_name: 'Pc monka (2).jpg',
+    },
+    {
+      file: 'sampledata/models/monka/Pc monka (1).jpg',
+      name: 'Pc monka (1)',
+      pipeline_name: 'Pc monka (1).jpg',
+    },
+  ],
+  version: '0.52:1',
+}

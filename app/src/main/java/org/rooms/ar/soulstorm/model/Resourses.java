@@ -1,4 +1,4 @@
-package org.rooms.ar.soulstorm;
+package org.rooms.ar.soulstorm.model;
 
 public class Resourses {
     private long energy;

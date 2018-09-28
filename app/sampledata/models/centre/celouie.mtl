@@ -1,0 +1,9 @@
+# Exported from 3D Builder
+
+newmtl T_1
+Kd 1.000000 1.000000 1.000000
+map_Kd centre de coalition (1).jpg
+
+newmtl T
+Kd 1.000000 1.000000 1.000000
+map_Kd centre de coalition (2).jpg

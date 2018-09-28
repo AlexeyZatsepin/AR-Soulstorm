@@ -1,0 +1,81 @@
+{
+  materials: [
+    {
+      name: 'mat-2',
+      parameters: [
+        {
+          baseColor: 'Kroot evolution-1',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'MAT-1',
+      parameters: [
+        {
+          baseColor: 'Kroot evolution-2',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/kroot/kroot facility.obj',
+    name: 'kroot facility',
+    recenter: 'root',
+    scale: 0.020018000000000001,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/kroot/Kroot evolution-2.jpg',
+      name: 'Kroot evolution-2',
+      pipeline_name: 'Kroot evolution-2.jpg',
+    },
+    {
+      file: 'sampledata/models/kroot/Kroot evolution-1.jpg',
+      name: 'Kroot evolution-1',
+      pipeline_name: 'Kroot evolution-1.jpg',
+    },
+  ],
+  version: '0.52:1',
+}

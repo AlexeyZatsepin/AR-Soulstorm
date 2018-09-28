@@ -31,11 +31,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     lintOptions {
         abortOnError false
     }
 }
+
 
 dependencies {
     implementation "com.google.ar.sceneform:core:$sceneform_version"
@@ -49,6 +49,10 @@ dependencies {
 
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-auth:$firebase_version"
+
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
@@ -79,3 +83,34 @@ sceneform.asset('sampledata/models/void/void illumitus.obj',
         'default',
         'sampledata/models/void/void illumitus.sfa',
         'src/main/res/raw/voidillumitus')
+
+
+sceneform.asset('sampledata/models/monka/pc monka.obj',
+        'default',
+        'sampledata/models/monka/pc monka.sfa',
+        'src/main/res/raw/pcmonka')
+
+sceneform.asset('sampledata/models/centre/celouie.obj',
+        'default',
+        'sampledata/models/centre/celouie.sfa',
+        'src/main/res/raw/celouie')
+
+sceneform.asset('sampledata/models/kroot/kroot facility.obj',
+        'default',
+        'sampledata/models/kroot/kroot facility.sfa',
+        'src/main/res/raw/krootfacility')
+
+sceneform.asset('sampledata/models/pad/tau landing pad.obj',
+        'default',
+        'sampledata/models/pad/tau landing pad.sfa',
+        'src/main/res/raw/taulandingpad')
+
+sceneform.asset('sampledata/models/kaiune/pc kaiune.obj',
+        'default',
+        'sampledata/models/kaiune/pc kaiune.sfa',
+        'src/main/res/raw/pckaiune')
+
+sceneform.asset('sampledata/models/ship/scene.obj',
+        'default',
+        'sampledata/models/ship/scene.sfa',
+        'src/main/res/raw/scene')

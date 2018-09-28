@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scene_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/first_input"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:textColorHint="@color/colorAccentTint"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorAccentTint">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccentTint"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorAccentTint" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/second_input"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:textColorHint="@color/colorAccentTint"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorAccentTint">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccentTint"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/colorAccentTint" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/login"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/drawable_button_login"
+        android:enabled="false"
+        android:foreground="?attr/selectableItemBackground"
+        android:stateListAnimator="@animator/anim_button_login"
+        android:text="@string/login"
+        android:textColor="@android:color/white" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/google"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/drawable_button_login"
+        android:drawableStart="@drawable/ic_google"
+        android:foreground="?attr/selectableItemBackground"
+        android:stateListAnimator="@animator/anim_button_login"
+        android:text="@string/sign_in"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/drawable_ripple_dark"
+        android:text="@string/forgot_password"
+        android:textColor="@color/backgroundGradient" />
+
+    <TextView
+        android:id="@+id/create_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/drawable_ripple_dark"
+        android:text="@string/or_create_account_now"
+        android:textColor="@color/backgroundGradient" />
+
+</LinearLayout>

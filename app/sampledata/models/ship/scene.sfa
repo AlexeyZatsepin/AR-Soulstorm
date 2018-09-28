@@ -1,0 +1,205 @@
+{
+  materials: [
+    {
+      name: 'Tex_0000_0_dds',
+      parameters: [
+        {
+          baseColor: 'Tex_0000_0_dds_baseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'Tex_0001_0_dds',
+      parameters: [
+        {
+          baseColor: 'Tex_0001_0_dds_baseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'interieur_1',
+      parameters: [
+        {
+          baseColor: 'interieur_1_baseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'Tex_0019_0_dds_66',
+      parameters: [
+        {
+          baseColor: 'Tex_0019_0_dds_66_baseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'Tex_0018_0_dds_60',
+      parameters: [
+        {
+          baseColor: 'Tex_0018_0_dds_60_baseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'arriere_porte',
+      parameters: [
+        {
+          baseColor: 'arriere_porte_baseColor',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/ship/scene.obj',
+    name: 'scene',
+    recenter: 'root',
+    scale: 3.0000000000000001e-06,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/ship/arriere_porte_baseColor.jpg',
+      name: 'arriere_porte_baseColor',
+      pipeline_name: 'arriere_porte_baseColor.jpg',
+    },
+    {
+      file: 'sampledata/models/ship/Tex_0001_0_dds_baseColor.png',
+      name: 'Tex_0001_0_dds_baseColor',
+      pipeline_name: 'Tex_0001_0_dds_baseColor.png',
+    },
+    {
+      file: 'sampledata/models/ship/Tex_0018_0_dds_60_baseColor.jpeg',
+      name: 'Tex_0018_0_dds_60_baseColor',
+      pipeline_name: 'Tex_0018_0_dds_60_baseColor.jpeg',
+    },
+    {
+      file: 'sampledata/models/ship/Tex_0019_0_dds_66_baseColor.jpeg',
+      name: 'Tex_0019_0_dds_66_baseColor',
+      pipeline_name: 'Tex_0019_0_dds_66_baseColor.jpeg',
+    },
+    {
+      file: 'sampledata/models/ship/interieur_1_baseColor.jpeg',
+      name: 'interieur_1_baseColor',
+      pipeline_name: 'interieur_1_baseColor.jpeg',
+    },
+    {
+      file: 'sampledata/models/ship/Tex_0000_0_dds_baseColor.png',
+      name: 'Tex_0000_0_dds_baseColor',
+      pipeline_name: 'Tex_0000_0_dds_baseColor.png',
+    },
+  ],
+  version: '0.52:1',
+}

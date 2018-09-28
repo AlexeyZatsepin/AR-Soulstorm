@@ -1,4 +1,4 @@
-package org.rooms.ar.soulstorm;
+package org.rooms.ar.soulstorm.model;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;

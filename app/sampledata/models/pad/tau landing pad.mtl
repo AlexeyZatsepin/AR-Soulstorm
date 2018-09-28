@@ -1,0 +1,21 @@
+# Exported from 3D Builder
+
+newmtl Disque_1
+Kd 1.000000 1.000000 1.000000
+map_Kd SPATIO PORT TAU plate forme.jpg
+
+newmtl rebord
+Kd 1.000000 1.000000 1.000000
+map_Kd SPATIO PORT TAU rebord.jpg
+
+newmtl patioporte-2
+Kd 1.000000 1.000000 1.000000
+map_Kd SPATIO PORT TAU-2.jpg
+
+newmtl patioporte-2_batiment
+Kd 1.000000 1.000000 1.000000
+map_Kd SPATIO PORT TAU-2.jpg
+
+newmtl spatioport-1
+Kd 1.000000 1.000000 1.000000
+map_Kd SPATIO PORT TAU-1.jpg

@@ -1,4 +1,4 @@
-package org.rooms.ar.soulstorm;
+package org.rooms.ar.soulstorm.model;
 
 
 import com.google.firebase.auth.FirebaseUser;
@@ -15,5 +15,9 @@ public class SignInState {
 
     public FirebaseUser getUser() {
         return user;
+    }
+
+    public void setUser(FirebaseUser user) {
+        this.user = user;
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,21 +17,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <org.rooms.ar.soulstorm.DrawingView
-            android:id="@+id/drawingView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4" />
-
         <FrameLayout
-            android:id="@+id/scene_root"
+            android:id="@+id/drawing_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.6">
+            android:layout_weight="0.4">
 
-            <include layout="@layout/scene_login"/>
+            <org.rooms.ar.soulstorm.DrawingView
+                android:id="@+id/drawingView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/animation_tap" />
+
+            <TextView
+                android:id="@+id/explore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp"
+                android:gravity="bottom|center"
+                android:text="@string/explore"
+                android:textColor="@color/backgroundGradient" />
         </FrameLayout>
-    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+        <include
+            layout="@layout/component_login_base"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6" />
+
+    </LinearLayout>
+</FrameLayout>

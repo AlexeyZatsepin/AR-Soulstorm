@@ -71,7 +71,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
         float[] v3 = pose.getTranslation();
         node.setLocalPosition(new Vector3(v3[0], v3[1], v3[2]));
         ViewRenderable.builder()
-                .setView(getApplicationContext(), R.layout.main_menu)
+                .setView(getApplicationContext(), R.layout.ar_main_menu)
                 .build()
                 .thenAccept(
                         (renderable) -> {
@@ -140,7 +140,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     infoCard.setLocalScale(new Vector3(2f, 2f, 2f));
 
                     ViewRenderable.builder()
-                            .setView(getApplicationContext(), R.layout.info_card_layout)
+                            .setView(getApplicationContext(), R.layout.ar_info_card_layout)
                             .build()
                             .thenAccept(
                                     (r) -> {

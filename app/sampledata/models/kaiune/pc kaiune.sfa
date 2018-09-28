@@ -1,0 +1,81 @@
+{
+  materials: [
+    {
+      name: 'T',
+      parameters: [
+        {
+          baseColor: 'Pc de Kauyon-2',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+    {
+      name: 'T_1',
+      parameters: [
+        {
+          baseColor: 'Pc de Kauyon-1',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 0,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/kaiune/pc kaiune.obj',
+    name: 'pc kaiune',
+    recenter: 'root',
+    scale: 0.015457,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/kaiune/Pc de Kauyon-1.jpg',
+      name: 'Pc de Kauyon-1',
+      pipeline_name: 'Pc de Kauyon-1.jpg',
+    },
+    {
+      file: 'sampledata/models/kaiune/Pc de Kauyon-2.jpg',
+      name: 'Pc de Kauyon-2',
+      pipeline_name: 'Pc de Kauyon-2.jpg',
+    },
+  ],
+  version: '0.52:1',
+}

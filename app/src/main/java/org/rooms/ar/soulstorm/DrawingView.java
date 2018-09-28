@@ -11,19 +11,24 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 
 public class DrawingView extends View {
+    private static final int STROKE_WIDTH = 200;
     private Paint paint = new Paint();
     private Path path = new Path();
 
-    GestureDetector gestureDetector;
+    private List<OnTouchListener> mListeners = new ArrayList<>();
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        gestureDetector = new GestureDetector(context, new GestureListener());
 
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(200);
+        paint.setStrokeWidth(STROKE_WIDTH);
+
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
@@ -31,20 +36,12 @@ public class DrawingView extends View {
         path.setFillType(Path.FillType.INVERSE_EVEN_ODD);
     }
 
-    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public void onLongPress(MotionEvent e) {
-            path.reset();
-        }
+    public void addOnTouchListener(OnTouchListener listener) {
+        mListeners.add(listener);
+    }
 
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            float x = e.getX();
-            float y = e.getY();
-            path.reset();
-            Log.d("Double Tap", "Tapped at: (" + x + "," + y + ")");
-            return true;
-        }
+    public void removeOnTouchListener(OnTouchListener listener) {
+        mListeners.remove(listener);
     }
 
     @Override
@@ -79,7 +76,7 @@ public class DrawingView extends View {
             default:
                 return false;
         }
-        gestureDetector.onTouchEvent(event);
+        mListeners.forEach(listener -> listener.onTouch(this, event));
         invalidate();
         return true;
     }

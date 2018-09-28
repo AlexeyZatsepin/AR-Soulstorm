@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
+import org.rooms.ar.soulstorm.model.Building;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +26,23 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
 
     public RenderablesAdapter(ARActivity activity) {
         this.listener = activity;
-        data.add(new Building(R.drawable.firebase, "Firebase", "About", R.raw.firebasetau, activity));
-        data.add(new Building(R.drawable.defense, "Defense", "About", R.raw.taudefense, activity));
-        data.add(new Building(R.drawable.barrack, "Barrack", "About", R.raw.taubarracks, activity));
-        data.add(new Building(R.drawable.station, "Station", "About", R.raw.voidillumitus, activity));
-        data.add(new Building(R.drawable.generator, "Generator", "About", R.raw.plasmagenerator, activity));
+        data.add(new Building(R.drawable.img_firebase, "Firebase", "About", R.raw.firebasetau, activity));
+        data.add(new Building(R.drawable.img_defense, "Defense", "About", R.raw.taudefense, activity));
+        data.add(new Building(R.drawable.img_barrack, "Barrack", "About", R.raw.taubarracks, activity));
+        data.add(new Building(R.drawable.img_station, "Station", "About", R.raw.voidillumitus, activity));
+        data.add(new Building(R.drawable.img_generator, "Generator", "About", R.raw.plasmagenerator, activity));
+        data.add(new Building(R.drawable.img_monka, "Monka", "About", R.raw.pcmonka, activity));
+        data.add(new Building(R.drawable.img_centre, "Celouie", "About", R.raw.celouie, activity));
+        data.add(new Building(R.drawable.img_kroot, "Kroot Facility", "About", R.raw.krootfacility, activity));
+        data.add(new Building(R.drawable.img_kaiune, "Kaiune PC", "About", R.raw.pckaiune, activity));
+        data.add(new Building(R.drawable.img_pad, "Landing Pad", "About", R.raw.taulandingpad, activity));
+        data.add(new Building(R.drawable.img_ship, "Ship", "About", R.raw.scene, activity));
     }
 
     @NonNull
     @Override
     public RenderableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_card_layout, parent, false);
         return new RenderableViewHolder(v);
     }
 

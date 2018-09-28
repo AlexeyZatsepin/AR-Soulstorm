@@ -1,25 +1,51 @@
 package org.rooms.ar.soulstorm;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.transition.Scene;
-import android.support.transition.TransitionManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.rooms.ar.soulstorm.model.SignInState;
 
 import java.io.IOException;
 
 public class SignInActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener {
+    private static final String TAG = SignInActivity.class.getSimpleName();
+    private static final int RC_SIGN_IN = 100;
+
     private Camera mCamera;
 
-    private Scene mSceneLogin;
-    private Scene mSceneRegistration;
-    private Scene mScenePasswordReset;
+    private LottieAnimationView mAnimationView;
+    private TextView mExploreView;
+
     private ViewGroup mSceneRoot;
+
+    //basic views
+    private EditText mEmailEditText;
+    private EditText mPasswordEditText;
+    private Button mLoginButton;
+    private Button mGoogleButton;
+    private TextView mForgotPassword;
+    private TextView mCreateAccountPassword;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +55,130 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
         TextureView mTextureView = findViewById(R.id.camera_preview);
         mTextureView.setSurfaceTextureListener(this);
 
+        mAnimationView = findViewById(R.id.animation_view);
+        mExploreView = findViewById(R.id.explore);
+        mExploreView.animate()
+                .setStartDelay(100)
+                .setDuration(500)
+                .scaleX(2)
+                .scaleY(2)
+                .withEndAction(() -> mExploreView.animate()
+                        .setStartDelay(100)
+                        .setDuration(500)
+                        .scaleX(1)
+                        .scaleY(1)
+                        .start())
+                .start();
+        DrawingView drawingView = findViewById(R.id.drawingView);
+        drawingView.addOnTouchListener( (view,event) -> {
+            mAnimationView.setVisibility(View.GONE);
+            mExploreView.setVisibility(View.GONE);
+            drawingView.performClick();
+            return true;
+        });
+
         mSceneRoot = findViewById(R.id.scene_root);
 
-        findViewById(R.id.create_account).setOnClickListener(v -> TransitionManager.go(mSceneRegistration));
+        mEmailEditText = findViewById(R.id.edit_email);
+        mPasswordEditText = findViewById(R.id.edit_password);
+        mLoginButton = findViewById(R.id.login);
+        mGoogleButton = findViewById(R.id.google);
+        mForgotPassword = findViewById(R.id.forgot_password);
+        mCreateAccountPassword = findViewById(R.id.create_account);
 
-        mSceneLogin = Scene.getSceneForLayout(mSceneRoot, R.layout.scene_login, getApplicationContext());
-        mSceneRegistration = Scene.getSceneForLayout(mSceneRoot, R.layout.scene_registration, getApplicationContext());
-        mScenePasswordReset = Scene.getSceneForLayout(mSceneRoot, R.layout.scene_forgot_password, getApplicationContext());
+        mPasswordEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mLoginButton.setEnabled(s.length() > 0 && mEmailEditText.getText().length() > 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        mLoginButton.setOnClickListener(this::login);
+        mGoogleButton.setOnClickListener(this::loginWithGoogle);
+        mForgotPassword.setOnClickListener(this::openForgotPasswordScreen);
+        mCreateAccountPassword.setOnClickListener(this::openSignUpScreen);
+
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        onLoginSuccess(currentUser);
+    }
+
+    private void login(View view) {
+        mAuth.signInWithEmailAndPassword(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        onLoginSuccess(user);
+                    } else {
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        onLoginSuccess(null);
+                    }
+
+                });
+    }
+
+    private void loginWithGoogle(View view) {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+    }
+
+    private void createAccount(View view) {
+        mAuth.createUserWithEmailAndPassword(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        onLoginSuccess(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        onLoginSuccess(null);
+                    }
+                });
+    }
+
+    private void openLoginScreen(View view) {
+        mSceneRoot.addView(mGoogleButton, 3);
+        mSceneRoot.addView(mForgotPassword, 4);
+        mCreateAccountPassword.setOnClickListener(this::openSignUpScreen);
+    }
+
+    private void openSignUpScreen(View view) {
+        mSceneRoot.removeView(mGoogleButton);
+        mSceneRoot.removeView(mForgotPassword);
+        mCreateAccountPassword.setOnClickListener(this::openLoginScreen);
+    }
+
+    private void openForgotPasswordScreen(View view) {
+
+    }
+
+    private void onLoginSuccess(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            SignInState.getInstance().setUser(currentUser);
+            startActivity(new Intent(this, ARActivity.class));
+        }
     }
 
     @Override
