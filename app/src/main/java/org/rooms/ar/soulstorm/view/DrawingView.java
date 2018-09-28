@@ -1,4 +1,4 @@
-package org.rooms.ar.soulstorm;
+package org.rooms.ar.soulstorm.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
