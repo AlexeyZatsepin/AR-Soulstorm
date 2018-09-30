@@ -1,15 +1,18 @@
 package org.rooms.ar.soulstorm.model;
 
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignInState {
     private static SignInState INSTANCE = new SignInState();
     private FirebaseUser user;
-    private Resourses resourses;
+    private MutableLiveData<Resourses> resourses;
 
     private SignInState(){
-        resourses = new Resourses(0,0);
+        resourses = new MutableLiveData<>();
     }
 
     public static SignInState getInstance() {
@@ -24,11 +27,11 @@ public class SignInState {
         this.user = user;
     }
 
-    public Resourses getResourses() {
+    public LiveData<Resourses> getResourses() {
         return resourses;
     }
 
     public void setResourses(Resourses resourses) {
-        this.resourses = resourses;
+        this.resourses.postValue(resourses);
     }
 }

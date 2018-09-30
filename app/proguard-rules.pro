@@ -17,3 +17,7 @@
 #}
 -keepattributes Signature
 -keepattributes *Annotation*
+# This rule will properly ProGuard all the model classes in
+# the package com.yourcompany.models. Modify to fit the structure
+# of your app.
+-keepclassmembers class org.rooms.ar.soulstorm.** { *; }

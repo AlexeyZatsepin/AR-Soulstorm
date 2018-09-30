@@ -4,6 +4,8 @@ public class Resourses {
     private long energy;
     private long force;
 
+    public Resourses(){}
+
     public Resourses(long energy, long force) {
         this.energy = energy;
         this.force = force;
