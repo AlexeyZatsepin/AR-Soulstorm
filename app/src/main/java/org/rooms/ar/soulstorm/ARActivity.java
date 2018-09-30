@@ -58,7 +58,8 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
     @Override
     protected void onResume() {
         super.onResume();
-        energyLevelTextView.setText(String.valueOf(SignInState.getInstance().getResourses().getEnergy()));
+        SignInState.getInstance().getResourses().observe(this,
+                resourses -> energyLevelTextView.setText(String.valueOf(resourses.getEnergy())));
     }
 
     private void initMenu() {

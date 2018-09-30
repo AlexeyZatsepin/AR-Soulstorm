@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.RenderableViewHolder> {
+public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.ModelViewHolder> {
     private List<Building> data = new ArrayList<>();
     private OnRenderableSelectListener listener;
 
@@ -26,28 +26,21 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
 
     public RenderablesAdapter(ARActivity activity) {
         this.listener = activity;
-        data.add(new Building(R.drawable.img_firebase, "Firebase", "About", R.raw.firebasetau, activity));
-        data.add(new Building(R.drawable.img_defense, "Defense", "About", R.raw.taudefense, activity));
-        data.add(new Building(R.drawable.img_barrack, "Barrack", "About", R.raw.taubarracks, activity));
-        data.add(new Building(R.drawable.img_station, "Station", "About", R.raw.voidillumitus, activity));
-        data.add(new Building(R.drawable.img_generator, "Generator", "About", R.raw.plasmagenerator, activity));
-        data.add(new Building(R.drawable.img_monka, "Monka", "About", R.raw.pcmonka, activity));
-        data.add(new Building(R.drawable.img_centre, "Celouie", "About", R.raw.celouie, activity));
-        data.add(new Building(R.drawable.img_kroot, "Kroot Facility", "About", R.raw.krootfacility, activity));
-        data.add(new Building(R.drawable.img_kaiune, "Kaiune PC", "About", R.raw.pckaiune, activity));
-        data.add(new Building(R.drawable.img_pad, "Landing Pad", "About", R.raw.taulandingpad, activity));
-        data.add(new Building(R.drawable.img_ship, "Ship", "About", R.raw.scene, activity));
+        for (Building item : Building.values()) {
+            item.initModel(activity.getApplicationContext());
+            data.add(item);
+        }
     }
 
     @NonNull
     @Override
-    public RenderableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_card_layout, parent, false);
-        return new RenderableViewHolder(v);
+        return new ModelViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RenderableViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ModelViewHolder holder, int position) {
         Building info = data.get(position);
         holder.imageView.setImageDrawable(holder.itemView.getContext().getDrawable(info.getImage()));
         holder.titleView.setText(info.getTitle());
@@ -60,14 +53,14 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         return data.size();
     }
 
-    class RenderableViewHolder extends RecyclerView.ViewHolder {
+    class ModelViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView titleView;
         TextView descriptionView;
         TextView pin;
         TextView about;
 
-        RenderableViewHolder(View itemView) {
+        ModelViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.media_image);
             titleView = itemView.findViewById(R.id.primary_text);
