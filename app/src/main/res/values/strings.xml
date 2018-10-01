@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AR Soulstorm</string>
+
     <string name="exit">Exit</string>
     <string name="about">About</string>
     <string name="rating">Rating</string>
     <string name="start">Start</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="or_create_account_now">or Create account now!</string>
     <string name="login">Login</string>
+
     <string name="explore">Explore Augmentet Reality now!!</string>
+
     <string name="firebase">Firebase</string>
-    <string name="about">About</string>
     <string name="defense">Defense</string>
     <string name="barrack">Barrack</string>
     <string name="station">Station</string>
@@ -24,4 +27,5 @@
     <string name="kaiune">Kaiune PC</string>
     <string name="landing_pad">Landing Pad</string>
     <string name="ship">Ship</string>
+    <string name="back_to_login">Back to login screen</string>
 </resources>

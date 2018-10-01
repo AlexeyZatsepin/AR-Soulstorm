@@ -10,6 +10,7 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,7 +45,9 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
     private ViewGroup mSceneRoot;
 
     //basic views
+    private TextInputLayout mFirstInputLayout;
     private EditText mEmailEditText;
+    private TextInputLayout mSecondInputLayout;
     private EditText mPasswordEditText;
     private Button mLoginButton;
     private Button mGoogleButton;
@@ -90,7 +93,9 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
 
         mSceneRoot = findViewById(R.id.scene_root);
 
+        mFirstInputLayout = findViewById(R.id.first_input);
         mEmailEditText = findViewById(R.id.edit_email);
+        mSecondInputLayout = findViewById(R.id.second_input);
         mPasswordEditText = findViewById(R.id.edit_password);
         mLoginButton = findViewById(R.id.login);
         mGoogleButton = findViewById(R.id.google);
@@ -173,12 +178,16 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
         mSceneRoot.addView(mGoogleButton, 3);
         mSceneRoot.addView(mForgotPassword, 4);
         mCreateAccountPassword.setOnClickListener(this::openSignUpScreen);
+        mLoginButton.setOnClickListener(this::login);
+        mForgotPassword.setText(R.string.forgot_password);
     }
 
     private void openSignUpScreen(View view) {
         mSceneRoot.removeView(mGoogleButton);
         mSceneRoot.removeView(mForgotPassword);
         mCreateAccountPassword.setOnClickListener(this::openLoginScreen);
+        mLoginButton.setOnClickListener(this::createAccount);
+        mForgotPassword.setText(R.string.back_to_login);
     }
 
     private void openForgotPasswordScreen(View view) {
