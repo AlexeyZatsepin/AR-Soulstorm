@@ -4,7 +4,8 @@
     android:color="@color/backgroundDrawerGradient"
     tools:targetApi="lollipop">
     <item android:id="@android:id/mask">
-        <shape android:shape="oval">
+        <shape android:shape="rectangle">
+            <corners android:radius="5dp"/>
             <solid android:color="@color/backgroundDrawerGradient" />
         </shape>
     </item>
