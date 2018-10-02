@@ -28,4 +28,5 @@
     <string name="landing_pad">Landing Pad</string>
     <string name="ship">Ship</string>
     <string name="back_to_login">Back to login screen</string>
+    <string name="sign_up">Sign up</string>
 </resources>

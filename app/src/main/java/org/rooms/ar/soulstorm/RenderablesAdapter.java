@@ -1,5 +1,7 @@
 package org.rooms.ar.soulstorm;
 
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
 import org.rooms.ar.soulstorm.model.Building;
+import org.rooms.ar.soulstorm.model.Resources;
+import org.rooms.ar.soulstorm.model.SignInState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +23,15 @@ import java.util.List;
 public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.ModelViewHolder> {
     private List<Building> data = new ArrayList<>();
     private OnRenderableSelectListener listener;
-
+    private LifecycleOwner lifecycleObserver;
+    
     public interface OnRenderableSelectListener {
         void onSelect(ModelRenderable renderable);
     }
 
     public RenderablesAdapter(ARActivity activity) {
         this.listener = activity;
+        lifecycleObserver = activity;
         for (Building item : Building.values()) {
             item.initModel(activity.getApplicationContext());
             data.add(item);
@@ -42,10 +48,17 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
     @Override
     public void onBindViewHolder(@NonNull ModelViewHolder holder, int position) {
         Building info = data.get(position);
+        MutableLiveData<Resources> resoursesLiveData = SignInState.getInstance().getResourses();
         holder.imageView.setImageDrawable(holder.itemView.getContext().getDrawable(info.getImage()));
         holder.titleView.setText(info.getTitle());
         holder.descriptionView.setText(info.getDescription());
-        holder.pin.setOnClickListener(v -> listener.onSelect(info.getRendarable()));
+        holder.pin.setOnClickListener(v -> {
+            listener.onSelect(info.getRendarable());
+            Resources resources = resoursesLiveData.getValue();
+            resoursesLiveData.postValue(new Resources(resources.getEnergy()-info.getCoast(), resources.getForce()));
+        });
+        resoursesLiveData.observe(lifecycleObserver, resources ->
+                holder.pin.setEnabled(info.getEnergyBoost()>=info.getCoast()));
     }
 
     @Override

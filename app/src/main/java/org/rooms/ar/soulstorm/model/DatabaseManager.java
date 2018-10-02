@@ -46,9 +46,9 @@ public class DatabaseManager {
         return manager;
     }
 
-    public void saveResources (Resourses resourses) {
+    public void saveResources (Resources resources) {
         String id = SignInState.getInstance().getUser().getUid();
-        mDatabase.child("res").child(id).setValue(resourses).addOnSuccessListener(aVoid -> {
+        mDatabase.child("res").child(id).setValue(resources).addOnSuccessListener(aVoid -> {
 
         }).addOnFailureListener(e -> {
 
