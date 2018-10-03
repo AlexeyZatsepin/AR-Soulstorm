@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1072325307402:android:f16a46a52693c303",
+        "mobilesdk_app_id": "1:1072325307402:android:9dd575f183143a74",
         "android_client_info": {
           "package_name": "org.rooms.ar.soulstorm"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1072325307402-ivo59lifgut0aljg6je790088066onc7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.rooms.ar.soulstorm",
+            "certificate_hash": "1b2da2a61d928d91d004589597511e4ab75d85f2"
+          }
+        },
         {
           "client_id": "1072325307402-b2tnf2c62dunulrujgvgiod77skj79df.apps.googleusercontent.com",
           "client_type": 3
@@ -29,8 +37,57 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072325307402-b2tnf2c62dunulrujgvgiod77skj79df.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072325307402:android:f16a46a52693c303",
+        "android_client_info": {
+          "package_name": "org.rooms.ar.soulstrom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072325307402-p7ph25f1748r66tj411igc219sr9ecee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.rooms.ar.soulstrom",
+            "certificate_hash": "1b2da2a61d928d91d004589597511e4ab75d85f2"
+          }
+        },
+        {
+          "client_id": "1072325307402-b2tnf2c62dunulrujgvgiod77skj79df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOVw28L7X65ADNKOvAxdA14M6za4787Hs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072325307402-b2tnf2c62dunulrujgvgiod77skj79df.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

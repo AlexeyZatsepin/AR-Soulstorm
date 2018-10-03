@@ -1,16 +1,20 @@
 package org.rooms.ar.soulstorm;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,12 +48,14 @@ import java.io.IOException;
 
 public class SignInActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener {
     private static final String TAG = SignInActivity.class.getSimpleName();
-    private static final int RC_SIGN_IN = 100;
+    private static final byte RC_SIGN_IN = 100;
+    private static final int PERMISSION_REQUEST_CODE = 200;
 
     private Camera mCamera;
 
     private LottieAnimationView mAnimationView;
     private TextView mExploreView;
+    private TextureView mTextureView;
 
     private ViewGroup mSceneRoot;
 
@@ -68,15 +74,23 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_in);
 
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
 
-        setContentView(R.layout.activity_sign_in);
+        mTextureView = findViewById(R.id.camera_preview);
 
-        TextureView mTextureView = findViewById(R.id.camera_preview);
-        mTextureView.setSurfaceTextureListener(this);
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                mTextureView.setSurfaceTextureListener(this);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+            }
+
+        }
 
         mAnimationView = findViewById(R.id.animation_view);
         mExploreView = findViewById(R.id.explore);
@@ -235,6 +249,7 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
         if (currentUser != null) {
             SignInState.getInstance().setUser(currentUser);
             startActivity(new Intent(this, ARActivity.class));
+            finish();
         }
     }
     
@@ -318,5 +333,19 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+                    mTextureView.setSurfaceTextureListener(this);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }

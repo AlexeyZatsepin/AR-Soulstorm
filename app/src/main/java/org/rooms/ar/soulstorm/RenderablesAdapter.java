@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.ar.sceneform.rendering.ModelRenderable;
-
 import org.rooms.ar.soulstorm.model.Building;
-import org.rooms.ar.soulstorm.model.Resources;
+import org.rooms.ar.soulstorm.model.MyResources;
 import org.rooms.ar.soulstorm.model.SignInState;
 
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
     private LifecycleOwner lifecycleObserver;
     
     public interface OnRenderableSelectListener {
-        void onSelect(ModelRenderable renderable);
+        void onSelect(Building info);
     }
 
     public RenderablesAdapter(ARActivity activity) {
@@ -48,17 +46,24 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
     @Override
     public void onBindViewHolder(@NonNull ModelViewHolder holder, int position) {
         Building info = data.get(position);
-        MutableLiveData<Resources> resoursesLiveData = SignInState.getInstance().getResourses();
+        MutableLiveData<MyResources> resoursesLiveData = SignInState.getInstance().getResources();
         holder.imageView.setImageDrawable(holder.itemView.getContext().getDrawable(info.getImage()));
         holder.titleView.setText(info.getTitle());
         holder.descriptionView.setText(info.getDescription());
+        holder.coast.setText(String.valueOf(info.getCoast()));
         holder.pin.setOnClickListener(v -> {
-            listener.onSelect(info.getRendarable());
-            Resources resources = resoursesLiveData.getValue();
-            resoursesLiveData.postValue(new Resources(resources.getEnergy()-info.getCoast(), resources.getForce()));
+            listener.onSelect(info);
+            MyResources resources = resoursesLiveData.getValue();
+            MyResources temp = new MyResources(resources.getEnergy()-info.getCoast(), resources.getForce());
+            resoursesLiveData.postValue(temp);
         });
-        resoursesLiveData.observe(lifecycleObserver, resources ->
-                holder.pin.setEnabled(info.getEnergyBoost()>=info.getCoast()));
+        resoursesLiveData.observe(lifecycleObserver, resources -> {
+            boolean condition = resources.getEnergy()>=info.getCoast();
+            holder.pin.setEnabled(condition);
+            android.content.res.Resources res = holder.itemView.getResources();
+            holder.coast.setTextColor(condition? res.getColor(android.R.color.white) : res.getColor(android.R.color.holo_red_dark));
+        });
+        holder.about.setOnClickListener(v-> ARActivity.openPopup(holder.itemView, info));
     }
 
     @Override
@@ -72,6 +77,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         TextView descriptionView;
         TextView pin;
         TextView about;
+        TextView coast;
 
         ModelViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +86,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
             descriptionView = itemView.findViewById(R.id.sub_text);
             about = itemView.findViewById(R.id.action_button_2);
             pin = itemView.findViewById(R.id.action_button_1);
+            coast = itemView.findViewById(R.id.energy_cost);
         }
     }
 }

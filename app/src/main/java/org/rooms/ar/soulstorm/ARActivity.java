@@ -1,12 +1,18 @@
 package org.rooms.ar.soulstorm;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,17 +26,22 @@ import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.math.Vector3;
-import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.rendering.PlaneRenderer;
+import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 
+import org.rooms.ar.soulstorm.model.Building;
+import org.rooms.ar.soulstorm.model.DatabaseManager;
+import org.rooms.ar.soulstorm.model.MyResources;
 import org.rooms.ar.soulstorm.model.SignInState;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
     private static final String TAG = ARActivity.class.getSimpleName();
 
     private ArFragment arFragment;
-    private RenderablesAdapter adapter;
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView energyLevelTextView;
 
@@ -41,7 +52,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        adapter = new RenderablesAdapter(this);
+        RenderablesAdapter adapter = new RenderablesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         energyLevelTextView = findViewById(R.id.energy_level);
@@ -53,13 +64,49 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                 arFragment.getArSceneView().getScene().removeOnUpdateListener(this);
             }
         });
+
+        Texture.Sampler sampler =
+                Texture.Sampler.builder()
+                        .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
+                        .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+                        .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+                        .build();
+
+        CompletableFuture<Texture> trigrid = Texture.builder()
+                .setSource(this, R.drawable.texture_grass)
+                .setSampler(sampler).build();
+
+        PlaneRenderer planeRenderer = arFragment.getArSceneView().getPlaneRenderer();
+        planeRenderer.getMaterial().thenAcceptBoth(trigrid, (material, texture) -> {
+            material.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture);
+            material.setFloat2(PlaneRenderer.MATERIAL_UV_SCALE, 100.0f, 100.0f);
+        });
+
+        arFragment.setOnTapArPlaneListener(
+                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                    //TODO tutorial
+        });
+
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        SignInState.getInstance().getResourses().observe(this,
-                resourses -> energyLevelTextView.setText(String.valueOf(resourses.getEnergy())));
+        MutableLiveData<MyResources> liveData = SignInState.getInstance().getResources();
+        liveData.observe(this, resources -> {
+            DatabaseManager.getInstance().saveResources(resources);
+            energyLevelTextView.setText(String.valueOf(resources.getEnergy()));
+        });
     }
 
     private void initMenu() {
@@ -75,8 +122,8 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                 .thenAccept(
                         (renderable) -> {
                             LinearLayout ll = (LinearLayout) renderable.getView();
-                            ll.findViewById(R.id.start).setOnClickListener(v->Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_LONG).show());
-                            ll.findViewById(R.id.exit).setOnClickListener(v->finish());
+                            ll.findViewById(R.id.start).setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_LONG).show());
+                            ll.findViewById(R.id.exit).setOnClickListener(v -> finish());
                             node.setRenderable(renderable);
                         })
                 .exceptionally(
@@ -86,10 +133,10 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
     }
 
     @Override
-    public void onSelect(ModelRenderable renderable) {
+    public void onSelect(Building item) {
         arFragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-                    if (renderable == null) {
+                    if (item.getRendarable() == null) {
                         return;
                     }
                     // Create the Anchor.
@@ -101,8 +148,11 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     Node node = new Node();
                     node.setParent(anchorNode);
                     node.setLocalScale(new Vector3(0.3f, 0.3f, 0.3f));
-                    node.setRenderable(renderable);
+                    node.setRenderable(item.getRendarable());
 //                    node.select();
+
+                    MyResources res = SignInState.getInstance().getResources().getValue();
+                    if (res != null) res.addBuilding(item);
 
                     Node infoCard = new Node();
                     infoCard.setParent(node);
@@ -129,5 +179,25 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-  
+    public static void openPopup(View view, Building item) {
+        LayoutInflater inflater = (LayoutInflater)
+                view.getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.component_popup_window, null);
+
+        int width = (int) (300 * view.getContext().getResources().getDisplayMetrics().density);
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        ImageView imageView = popupView.findViewById(R.id.media_image);
+        imageView.setImageDrawable(view.getContext().getDrawable(item.getImage()));
+        TextView titleView = popupView.findViewById(R.id.primary_text);
+        titleView.setText(item.getTitle());
+        TextView descriptionView = popupView.findViewById(R.id.sub_text);
+        descriptionView.setText(item.getDescription());
+        popupView.findViewById(R.id.close).setOnClickListener(v->popupWindow.dismiss());
+    }
+
+
 }

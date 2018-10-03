@@ -8,10 +8,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignInState {
     private static SignInState INSTANCE = new SignInState();
     private FirebaseUser user;
-    private MutableLiveData<Resources> resourses;
+    private MutableLiveData<MyResources> resources;
 
     private SignInState(){
-        resourses = new MutableLiveData<>();
+        resources = new MutableLiveData<>();
     }
 
     public static SignInState getInstance() {
@@ -24,13 +24,15 @@ public class SignInState {
 
     public void setUser(FirebaseUser user) {
         this.user = user;
+        resources.setValue(new MyResources());
+        DatabaseManager.getInstance().requestResources();
     }
 
-    public MutableLiveData<Resources> getResourses() {
-        return resourses;
+    public MutableLiveData<MyResources> getResources() {
+        return resources;
     }
 
-    public void setResourses(Resources resources) {
-        this.resourses.postValue(resources);
+    public void setResources(MyResources resources) {
+        this.resources.postValue(resources);
     }
 }

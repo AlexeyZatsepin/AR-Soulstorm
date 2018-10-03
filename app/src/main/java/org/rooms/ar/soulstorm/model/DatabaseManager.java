@@ -1,5 +1,6 @@
 package org.rooms.ar.soulstorm.model;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,26 +15,28 @@ public class DatabaseManager {
     private static DatabaseManager manager;
     private static String TAG = DatabaseManager.class.getSimpleName();
 
-    private DatabaseManager(){
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
+    private DatabaseManager() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.keepSynced(true);
 
         DatabaseReference userLastOnlineRef = mDatabase.child("users").child("last_online");
         userLastOnlineRef.onDisconnect().setValue(ServerValue.TIMESTAMP);
 
-        String id = SignInState.getInstance().getUser().getUid();
-        mDatabase.child("res").child(id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot item: dataSnapshot.getChildren()) {
-                    // TODO: handle the post
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    System.out.println("connected");
+                } else {
+                    System.out.println("not connected");
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadResource:onCancelled", databaseError.toException());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, databaseError.getMessage());
             }
         });
     }
@@ -41,17 +44,30 @@ public class DatabaseManager {
     public static DatabaseManager getInstance() {
         if (manager == null) {
             manager = new DatabaseManager();
-
         }
         return manager;
     }
 
-    public void saveResources (Resources resources) {
+    public void saveResources(MyResources resources) {
         String id = SignInState.getInstance().getUser().getUid();
         mDatabase.child("res").child(id).setValue(resources).addOnSuccessListener(aVoid -> {
 
-        }).addOnFailureListener(e -> {
+        }).addOnFailureListener(e -> Log.e(TAG, e.getMessage()));
+    }
 
+    public void requestResources() {
+        String id = SignInState.getInstance().getUser().getUid();
+        mDatabase.child("res").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                MyResources resources = dataSnapshot.getValue(MyResources.class);
+                SignInState.getInstance().setResources(resources);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, databaseError.getDetails());
+            }
         });
     }
 }
