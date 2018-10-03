@@ -1,14 +1,19 @@
 package org.rooms.ar.soulstorm.model;
 
-public class Resourses {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Resources {
     private long energy;
     private long force;
+    private Map<Building, Integer> mMap;
 
-    public Resourses(){}
+    public Resources(){}
 
-    public Resourses(long energy, long force) {
+    public Resources(long energy, long force) {
         this.energy = energy;
         this.force = force;
+        mMap = new HashMap<>();
     }
 
     public long getEnergy() {
@@ -25,5 +30,9 @@ public class Resourses {
 
     public void setForce(long force) {
         this.force = force;
+    }
+
+    public void addBuilding(Building item) {
+        mMap.computeIfAbsent(item, building -> mMap.get(building)+1);
     }
 }
