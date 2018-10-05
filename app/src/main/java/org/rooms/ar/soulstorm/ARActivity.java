@@ -33,10 +33,15 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import org.rooms.ar.soulstorm.model.Building;
 import org.rooms.ar.soulstorm.model.DatabaseManager;
+import org.rooms.ar.soulstorm.model.EnergyMinerWorker;
 import org.rooms.ar.soulstorm.model.MyResources;
 import org.rooms.ar.soulstorm.model.SignInState;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
     private static final String TAG = ARActivity.class.getSimpleName();
@@ -97,6 +102,10 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     .penaltyLog()
                     .build());
         }
+
+        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(EnergyMinerWorker.class,
+                1, TimeUnit.SECONDS).build();
+        WorkManager.getInstance().enqueue(workRequest);
     }
 
     @Override

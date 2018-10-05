@@ -54,8 +54,8 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         holder.pin.setOnClickListener(v -> {
             listener.onSelect(info);
             MyResources resources = resoursesLiveData.getValue();
-            MyResources temp = new MyResources(resources.getEnergy()-info.getCoast(), resources.getForce());
-            resoursesLiveData.postValue(temp);
+            resources.setEnergy(resources.getEnergy()-info.getCoast());
+            resoursesLiveData.postValue(resources);
         });
         resoursesLiveData.observe(lifecycleObserver, resources -> {
             boolean condition = resources.getEnergy()>=info.getCoast();
