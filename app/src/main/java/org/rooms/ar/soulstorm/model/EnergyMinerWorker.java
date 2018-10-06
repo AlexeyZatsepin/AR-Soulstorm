@@ -1,25 +1,19 @@
 package org.rooms.ar.soulstorm.model;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import androidx.work.Worker;
 
-public class EnergyMinerWorker extends Worker {
+public class EnergyMinerWorker implements Runnable {
 
     static final String TAG = "EnergyMinerWorker";
 
-    @NonNull
     @Override
-    public Worker.Result doWork() {
+    public void run() {
         Log.d(TAG, "EnergyMinerWorker: start");
 
         MyResources current = SignInState.getInstance().getResources().getValue();
-        current.setEnergy(current.increase());
-        SignInState.getInstance().getResources().postValue(current);
+        if (current!=null) SignInState.getInstance().getResources().postValue(current.increase());
 
         Log.d(TAG, "EnergyMinerWorker: end");
-
-        return Worker.Result.SUCCESS;
     }
 }

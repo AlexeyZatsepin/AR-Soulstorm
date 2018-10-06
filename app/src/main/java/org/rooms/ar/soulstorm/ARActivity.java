@@ -1,18 +1,18 @@
 package org.rooms.ar.soulstorm;
 
+import android.app.DialogFragment;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.StringRes;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +30,11 @@ import com.google.ar.sceneform.rendering.PlaneRenderer;
 import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.auth.FirebaseAuth;
 
+import org.rooms.ar.soulstorm.dialogs.ClearPopupFragment;
+import org.rooms.ar.soulstorm.dialogs.PopupWindows;
 import org.rooms.ar.soulstorm.model.Building;
 import org.rooms.ar.soulstorm.model.DatabaseManager;
 import org.rooms.ar.soulstorm.model.EnergyMinerWorker;
@@ -38,10 +42,10 @@ import org.rooms.ar.soulstorm.model.MyResources;
 import org.rooms.ar.soulstorm.model.SignInState;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 public class ARActivity extends AppCompatActivity implements RenderablesAdapter.OnRenderableSelectListener {
     private static final String TAG = ARActivity.class.getSimpleName();
@@ -49,6 +53,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
     private ArFragment arFragment;
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView energyLevelTextView;
+    private ScheduledExecutorService executor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,19 +108,24 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     .build());
         }
 
-        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(EnergyMinerWorker.class,
-                1, TimeUnit.SECONDS).build();
-        WorkManager.getInstance().enqueue(workRequest);
+        MutableLiveData<MyResources> liveData = SignInState.getInstance().getResources();
+        liveData.observe(this, resources -> {
+            DatabaseManager.getInstance().saveResources(resources);
+            energyLevelTextView.setText(String.valueOf(resources!=null?resources.getEnergy(): 0));
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        MutableLiveData<MyResources> liveData = SignInState.getInstance().getResources();
-        liveData.observe(this, resources -> {
-            DatabaseManager.getInstance().saveResources(resources);
-            energyLevelTextView.setText(String.valueOf(resources.getEnergy()));
-        });
+        executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(new EnergyMinerWorker(),1,1, TimeUnit.SECONDS);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        executor.shutdown();
     }
 
     private void initMenu() {
@@ -131,8 +141,13 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                 .thenAccept(
                         (renderable) -> {
                             LinearLayout ll = (LinearLayout) renderable.getView();
-                            ll.findViewById(R.id.start).setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_LONG).show());
-                            ll.findViewById(R.id.exit).setOnClickListener(v -> finish());
+                            ll.findViewById(R.id.start).setOnClickListener(v ->
+                                    showDialogFragment((dialog, which) ->
+                                            SignInState.getInstance().getResources().postValue(new MyResources()),R.string.message_clear_all));
+                            ll.findViewById(R.id.sign_out).setOnClickListener(v -> {
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                            });
                             node.setRenderable(renderable);
                         })
                 .exceptionally(
@@ -176,6 +191,12 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                                     (r) -> {
                                         infoCard.setRenderable(r);
                                         View view = r.getView();
+                                        view.findViewById(R.id.info).setOnClickListener(v->PopupWindows.openInfoPopup(view, item));
+//                                        view.findViewById(R.id.time).setOnClickListener(v->PopupWindows.openInfoPopup(view, item));
+                                        view.findViewById(R.id.remove).setOnClickListener(v->showDialogFragment((dialog, which) -> {
+                                            anchor.detach();
+                                            res.removeBuilding(item);
+                                        },R.string.message_clear_building));
                                     })
                             .exceptionally(
                                     (throwable) -> {
@@ -188,25 +209,10 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    public static void openPopup(View view, Building item) {
-        LayoutInflater inflater = (LayoutInflater)
-                view.getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.component_popup_window, null);
-
-        int width = (int) (300 * view.getContext().getResources().getDisplayMetrics().density);
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        ImageView imageView = popupView.findViewById(R.id.media_image);
-        imageView.setImageDrawable(view.getContext().getDrawable(item.getImage()));
-        TextView titleView = popupView.findViewById(R.id.primary_text);
-        titleView.setText(item.getTitle());
-        TextView descriptionView = popupView.findViewById(R.id.sub_text);
-        descriptionView.setText(item.getDescription());
-        popupView.findViewById(R.id.close).setOnClickListener(v->popupWindow.dismiss());
+    private void showDialogFragment(DialogInterface.OnClickListener listener, @StringRes int message) {
+        ClearPopupFragment fragment = new ClearPopupFragment();
+        fragment.setListener(listener, message);
+        fragment.show(getSupportFragmentManager(), "clear_popup");
     }
-
 
 }

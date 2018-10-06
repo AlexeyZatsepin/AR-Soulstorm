@@ -2,6 +2,7 @@ package org.rooms.ar.soulstorm;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.rooms.ar.soulstorm.dialogs.PopupWindows;
 import org.rooms.ar.soulstorm.model.Building;
 import org.rooms.ar.soulstorm.model.MyResources;
 import org.rooms.ar.soulstorm.model.SignInState;
@@ -60,10 +62,10 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         resoursesLiveData.observe(lifecycleObserver, resources -> {
             boolean condition = resources.getEnergy()>=info.getCoast();
             holder.pin.setEnabled(condition);
-            android.content.res.Resources res = holder.itemView.getResources();
+            Resources res = holder.itemView.getResources();
             holder.coast.setTextColor(condition? res.getColor(android.R.color.white) : res.getColor(android.R.color.holo_red_dark));
         });
-        holder.about.setOnClickListener(v-> ARActivity.openPopup(holder.itemView, info));
+        holder.about.setOnClickListener(v-> PopupWindows.openInfoPopup(holder.itemView, info));
     }
 
     @Override

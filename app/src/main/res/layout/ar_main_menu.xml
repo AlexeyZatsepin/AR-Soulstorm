@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/start"
-        android:text="@string/start"
+        android:text="@string/clear"
         android:background="@drawable/drawable_menu_button_green"
         style="@style/MenuButton"/>
 
@@ -24,7 +24,7 @@
         style="@style/MenuButton"/>
 
     <TextView
-        android:id="@+id/exit"
+        android:id="@+id/sign_out"
         android:text="@string/exit"
         android:background="@drawable/drawable_menu_button_red"
         style="@style/MenuButton"/>

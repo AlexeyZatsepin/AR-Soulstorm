@@ -10,6 +10,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class DatabaseManager {
     private DatabaseReference mDatabase;
     private static DatabaseManager manager;
@@ -50,9 +54,7 @@ public class DatabaseManager {
 
     public void saveResources(MyResources resources) {
         String id = SignInState.getInstance().getUser().getUid();
-        mDatabase.child("res").child(id).setValue(resources).addOnSuccessListener(aVoid -> {
-
-        }).addOnFailureListener(e -> Log.e(TAG, e.getMessage()));
+        mDatabase.child("res").child(id).setValue(resources).addOnFailureListener(e -> Log.e(TAG, e.getMessage()));
     }
 
     public void requestResources() {
@@ -61,6 +63,9 @@ public class DatabaseManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 MyResources resources = dataSnapshot.getValue(MyResources.class);
+                if (resources == null) {
+                    resources = new MyResources(true);
+                }
                 SignInState.getInstance().setResources(resources);
             }
 
@@ -69,5 +74,9 @@ public class DatabaseManager {
                 Log.e(TAG, databaseError.getDetails());
             }
         });
+    }
+
+    public void getRaiting() {
+
     }
 }

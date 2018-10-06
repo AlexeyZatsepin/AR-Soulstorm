@@ -24,7 +24,6 @@ public class SignInState {
 
     public void setUser(FirebaseUser user) {
         this.user = user;
-        resources.setValue(new MyResources());
         DatabaseManager.getInstance().requestResources();
     }
 

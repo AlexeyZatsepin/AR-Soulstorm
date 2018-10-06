@@ -47,13 +47,11 @@ dependencies {
     implementation "com.android.support:design:$support_version"
     implementation "com.android.support:recyclerview-v7:$support_version"
 
-    implementation "android.arch.work:work-runtime:1.0.0-alpha09"
-
     implementation "com.google.android.gms:play-services-auth:$gms_version"
 
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-auth:$firebase_version"
-    implementation "com.google.firebase:firebase-database:16.0.2"
+    implementation "com.google.firebase:firebase-database:16.0.3"
 
     //noinspection GradleDependency
     implementation "com.airbnb.android:lottie:$lottie_version"

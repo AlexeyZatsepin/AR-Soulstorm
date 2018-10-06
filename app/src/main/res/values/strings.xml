@@ -2,10 +2,10 @@
 <resources>
     <string name="app_name">AR Soulstorm</string>
 
-    <string name="exit">Exit</string>
+    <string name="exit">Sign out</string>
     <string name="about">About</string>
     <string name="rating">Rating</string>
-    <string name="start">Start</string>
+    <string name="clear">Clear</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -29,4 +29,10 @@
     <string name="ship">Ship</string>
     <string name="back_to_login">Back to login screen</string>
     <string name="sign_up">Sign up</string>
+
+    <string name="message_clear_building">Do you want to remove building?</string>
+    <string name="message_clear_all">Do you want to remove all building and info?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
 </resources>

@@ -1,29 +1,34 @@
 package org.rooms.ar.soulstorm.model;
 
-import android.support.annotation.StringRes;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MyResources {
     private static final byte BASIC_ENERGY = 100;
-    private long energy;
+    private float energy;
     private long force;
-    private Map<String, Integer> items;
-    private Date dateTime;
+    private Map<String, Integer> items = new HashMap<>();
+    private long dateTime;
 
-    public MyResources(){
-        energy = BASIC_ENERGY;
-        items = new HashMap<>();
-        dateTime = new Date(System.currentTimeMillis());
+    public MyResources(){ }
+
+    public MyResources(boolean defaultEnergy){
+        energy = defaultEnergy? BASIC_ENERGY : 0;
+        dateTime = System.currentTimeMillis();
     }
 
-    public long getEnergy() {
+    private MyResources(float energy, long force, Map<String, Integer> items, long dateTime) {
+        this.energy = energy;
+        this.force = force;
+        this.items = items;
+        this.dateTime = dateTime;
+    }
+
+    public float getEnergy() {
         return energy;
     }
 
-    public void setEnergy(long energy) {
+    public void setEnergy(float energy) {
         this.energy = energy;
     }
 
@@ -35,11 +40,11 @@ public class MyResources {
         this.force = force;
     }
 
-    public Date getDateTime() {
+    public long getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -52,10 +57,16 @@ public class MyResources {
         items.computeIfAbsent(item.name(), building -> items.getOrDefault(building,0)+1);
     }
 
-    public long increase() {
+    public void removeBuilding(Building item) {
+        items.computeIfAbsent(item.name(), building -> items.getOrDefault(building,0)-1);
+    }
+
+    public MyResources increase() {
         for (String item : items.keySet()) {
             energy += Building.valueOf(item).getEnergyBoost() * items.get(item);
         }
-        return energy;
+        energy += 0.1;
+        return new MyResources(Math.round(energy*10)/10f, force, items, dateTime);
     }
+
 }
