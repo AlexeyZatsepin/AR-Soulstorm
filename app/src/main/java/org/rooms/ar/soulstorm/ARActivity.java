@@ -1,6 +1,5 @@
 package org.rooms.ar.soulstorm;
 
-import android.app.DialogFragment;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.Frame;
@@ -30,11 +28,11 @@ import com.google.ar.sceneform.rendering.PlaneRenderer;
 import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
-import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.rooms.ar.soulstorm.dialogs.ClearPopupFragment;
 import org.rooms.ar.soulstorm.dialogs.PopupWindows;
+import org.rooms.ar.soulstorm.dialogs.RaitingPopupFragment;
 import org.rooms.ar.soulstorm.model.Building;
 import org.rooms.ar.soulstorm.model.DatabaseManager;
 import org.rooms.ar.soulstorm.model.EnergyMinerWorker;
@@ -144,6 +142,9 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                             ll.findViewById(R.id.start).setOnClickListener(v ->
                                     showDialogFragment((dialog, which) ->
                                             SignInState.getInstance().getResources().postValue(new MyResources()),R.string.message_clear_all));
+                            ll.findViewById(R.id.rating).setOnClickListener(v -> {
+                                showRaitingFragment();
+                            });
                             ll.findViewById(R.id.sign_out).setOnClickListener(v -> {
                                 FirebaseAuth.getInstance().signOut();
                                 startActivity(new Intent(getApplicationContext(), SignInActivity.class));
@@ -213,6 +214,11 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
         ClearPopupFragment fragment = new ClearPopupFragment();
         fragment.setListener(listener, message);
         fragment.show(getSupportFragmentManager(), "clear_popup");
+    }
+
+    private void showRaitingFragment(){
+        RaitingPopupFragment fragment = new RaitingPopupFragment();
+        fragment.show(getSupportFragmentManager(), "raiting_popup");
     }
 
 }

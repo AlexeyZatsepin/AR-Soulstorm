@@ -14,7 +14,7 @@
     <string name="or_create_account_now">or Create account now!</string>
     <string name="login">Login</string>
 
-    <string name="explore">Explore Augmentet Reality now!!</string>
+    <string name="explore">Explore Augmented Reality now!!</string>
 
     <string name="firebase">Firebase</string>
     <string name="defense">Defense</string>
@@ -32,7 +32,4 @@
 
     <string name="message_clear_building">Do you want to remove building?</string>
     <string name="message_clear_all">Do you want to remove all building and info?</string>
-    <string name="ok">Ok</string>
-    <string name="cancel">Cancel</string>
-    <string name="clear">Clear</string>
 </resources>

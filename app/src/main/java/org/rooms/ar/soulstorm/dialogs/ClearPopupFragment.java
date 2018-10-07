@@ -25,8 +25,8 @@ public class ClearPopupFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder adb = new AlertDialog.Builder(getContext())
                 .setTitle(R.string.clear)
-                .setPositiveButton(R.string.ok, listener)
-                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
+                .setPositiveButton(android.R.string.ok, listener)
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss())
                 .setMessage(message);
         return adb.create();
     }

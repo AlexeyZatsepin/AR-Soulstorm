@@ -125,18 +125,18 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
         mForgotPassword = findViewById(R.id.forgot_password);
         mCreateAccountPassword = findViewById(R.id.create_account);
 
-        mPasswordEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+        mEmailEditText.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mLoginButton.setEnabled(s.length() > 0 && mEmailEditText.getText().length() > 0);
+                mFirstInputLayout.setErrorEnabled(false);
+                mLoginButton.setEnabled(s.length() > 0 && mPasswordEditText.getText().length() > 0);
             }
-
+        });
+        mPasswordEditText.addTextChangedListener(new SimpleTextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mSecondInputLayout.setErrorEnabled(false);
+                mLoginButton.setEnabled(s.length() > 0 && mEmailEditText.getText().length() > 0);
             }
         });
         mLoginButton.setOnClickListener(this::login);
@@ -347,5 +347,13 @@ public class SignInActivity extends AppCompatActivity implements TextureView.Sur
                 }
                 break;
         }
+    }
+
+    private abstract class SimpleTextWatcher implements TextWatcher {
+        @Override
+        public final void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override
+        public final void afterTextChanged(Editable s) { }
     }
 }

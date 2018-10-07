@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/avatar_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:padding="4dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_person"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#DE000000"
+        tools:text="Alexey Zatsepin"
+        app:layout_constraintTop_toTopOf="@+id/avatar_image"
+        app:layout_constraintStart_toEndOf="@+id/avatar_image"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/energy_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#8A000000"
+        android:drawableStart="@drawable/ic_flash"
+        tools:text="100"
+        app:layout_constraintStart_toEndOf="@+id/avatar_image"
+        app:layout_constraintEnd_toEndOf="+id/battle_text"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar_image" />
+
+    <TextView
+        android:id="@+id/battle_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#8A000000"
+        android:drawableStart="@drawable/ic_flash"
+        tools:text="100"
+        app:layout_constraintStart_toEndOf="@+id/energy_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar_image" />
+
+</android.support.constraint.ConstraintLayout>

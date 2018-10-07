@@ -41,7 +41,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
     @NonNull
     @Override
     public ModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_card_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.component_building_card, parent, false);
         return new ModelViewHolder(v);
     }
 
@@ -64,6 +64,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
             holder.pin.setEnabled(condition);
             Resources res = holder.itemView.getResources();
             holder.coast.setTextColor(condition? res.getColor(android.R.color.white) : res.getColor(android.R.color.holo_red_dark));
+            holder.itemView.setAlpha(condition? 1 : 0.5f);
         });
         holder.about.setOnClickListener(v-> PopupWindows.openInfoPopup(holder.itemView, info));
     }
