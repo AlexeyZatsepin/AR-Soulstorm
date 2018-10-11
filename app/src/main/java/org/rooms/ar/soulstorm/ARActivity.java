@@ -175,6 +175,13 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
                     node.setLocalScale(new Vector3(0.3f, 0.3f, 0.3f));
                     node.setRenderable(item.getRendarable());
 //                    node.select();
+                    
+                    if (item == Building.SHIP) {
+                        Quaternion q1 = node.getLocalRotation();
+                        Quaternion q2 = Quaternion.axisAngle(new Vector3(1f, 0f, 0f), 270f);
+                        node.setWorldRotation(Quaternion.multiply(q1, q2));
+                        node.setLocalPosition(new Vector3(0f, 0f, 1f));
+                    }
 
                     MyResources res = SignInState.getInstance().getResources().getValue();
                     if (res != null) res.addBuilding(item);
