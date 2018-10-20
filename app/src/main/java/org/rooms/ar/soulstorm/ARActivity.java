@@ -23,6 +23,7 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.PlaneRenderer;
 import com.google.ar.sceneform.rendering.Texture;
@@ -51,6 +52,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
     private ArFragment arFragment;
     private BottomSheetBehavior bottomSheetBehavior;
     private TextView energyLevelTextView;
+    private TextView forceLevelTextView;
     private ScheduledExecutorService executor;
 
     @Override
@@ -64,6 +66,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         energyLevelTextView = findViewById(R.id.energy_level);
+        forceLevelTextView = findViewById(R.id.force_level);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
         arFragment.getArSceneView().getScene().addOnUpdateListener(new Scene.OnUpdateListener() {
             @Override
@@ -110,6 +113,7 @@ public class ARActivity extends AppCompatActivity implements RenderablesAdapter.
         liveData.observe(this, resources -> {
             DatabaseManager.getInstance().saveResources(resources);
             energyLevelTextView.setText(String.valueOf(resources!=null?resources.getEnergy(): 0));
+            forceLevelTextView.setText(String.valueOf(resources!=null?resources.getForce(): 0));
         });
     }
 

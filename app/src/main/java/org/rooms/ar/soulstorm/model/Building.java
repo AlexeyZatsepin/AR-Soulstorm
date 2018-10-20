@@ -11,18 +11,21 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 
 import org.rooms.ar.soulstorm.R;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Building {
-    FIREBASE   (0, 0, 100, R.drawable.img_firebase, R.string.firebase, R.string.about, R.raw.firebasetau),
-    DEFENSE    (0, 100, 100, R.drawable.img_defense, R.string.defense, R.string.about, R.raw.taudefense),
-    BARRACK    (0, 50, 100, R.drawable.img_barrack, R.string.barrack, R.string.about, R.raw.taubarracks),
-    STATION    (10, 0, 50, R.drawable.img_station, R.string.station, R.string.about, R.raw.voidillumitus),
-    GENERATOR  (30, 0, 150, R.drawable.img_generator, R.string.generator, R.string.about, R.raw.plasmagenerator),
-    MONKA      (0, 0, 200, R.drawable.img_monka, R.string.monka, R.string.about, R.raw.pcmonka),
-    CENTRE     (10, 0, 70, R.drawable.img_centre, R.string.celouie, R.string.about, R.raw.celouie),
-    KROOT      (10, 0, 90, R.drawable.img_kroot, R.string.kroot_facility, R.string.about, R.raw.krootfacility),
-    KAIUNE     (10, 0, 60, R.drawable.img_kaiune, R.string.kaiune, R.string.about, R.raw.pckaiune),
-    LANDING_PAD(10, 0, 300, R.drawable.img_pad, R.string.landing_pad, R.string.about, R.raw.taulandingpad),
-    SHIP       (0, 0, 0, R.drawable.img_ship, R.string.ship, R.string.about, R.raw.scene);
+    FIREBASE   (1000, 1, 10, R.drawable.img_firebase, R.string.firebase, R.string.about, R.raw.firebasetau),
+    BARRACK    (200, 0, 100, R.drawable.img_barrack, R.string.barrack, R.string.about, R.raw.taubarracks, FIREBASE),
+    GENERATOR  (200, 10, 0, R.drawable.img_generator, R.string.generator, R.string.about, R.raw.plasmagenerator, FIREBASE),
+    DEFENSE    (300, -10, 250, R.drawable.img_defense, R.string.defense, R.string.about, R.raw.taudefense, BARRACK),
+    KROOT      (250, 0, 130, R.drawable.img_kroot, R.string.kroot_facility, R.string.about, R.raw.krootfacility, BARRACK),
+    STATION    (400, 25, 0, R.drawable.img_station, R.string.station, R.string.about, R.raw.voidillumitus, GENERATOR),
+    CENTRE     (600, 30, 100, R.drawable.img_centre, R.string.celouie, R.string.about, R.raw.celouie, STATION, DEFENSE),
+    MONKA      (1000, 5, 100, R.drawable.img_monka, R.string.monka, R.string.about, R.raw.pcmonka, CENTRE),
+    KAIUNE     (600, 50, 0, R.drawable.img_kaiune, R.string.kaiune, R.string.about, R.raw.pckaiune, STATION),
+    LANDING_PAD(1400, -400, 1000, R.drawable.img_pad, R.string.landing_pad, R.string.about, R.raw.taulandingpad, MONKA, KAIUNE),
+    SHIP       (500, -20, 600, R.drawable.img_ship, R.string.ship, R.string.about, R.raw.scene, LANDING_PAD);
 
     private float energyBoost;
     private float battleBoost;
@@ -39,7 +42,9 @@ public enum Building {
 
     private ModelRenderable rendarable;
 
-    Building(float energyBoost, float battleBoost, int coast, @DrawableRes int image, @StringRes int title, @StringRes int description, @RawRes int resId) {
+    private List<Building> parents;
+
+    Building(int coast, float energyBoost, float battleBoost, @DrawableRes int image, @StringRes int title, @StringRes int description, @RawRes int resId, Building ... parents) {
         this.energyBoost = energyBoost;
         this.battleBoost = battleBoost;
         this.coast = coast;
@@ -47,6 +52,7 @@ public enum Building {
         this.title = title;
         this.description = description;
         this.resId = resId;
+        this.parents = Arrays.asList(parents);
     }
 
     public int getImage() {
@@ -79,6 +85,10 @@ public enum Building {
 
     public int getCoast() {
         return coast;
+    }
+
+    public List<Building> getParents() {
+        return parents;
     }
 
     public void initModel(Context context) {

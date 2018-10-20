@@ -18,6 +18,7 @@ import org.rooms.ar.soulstorm.model.SignInState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.ModelViewHolder> {
@@ -34,7 +35,9 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         lifecycleObserver = activity;
         for (Building item : Building.values()) {
             item.initModel(activity.getApplicationContext());
-            data.add(item);
+            if (item != Building.SHIP) {
+                data.add(item);
+            }
         }
     }
 
@@ -51,7 +54,13 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
         MutableLiveData<MyResources> resoursesLiveData = SignInState.getInstance().getResources();
         holder.imageView.setImageDrawable(holder.itemView.getContext().getDrawable(info.getImage()));
         holder.titleView.setText(info.getTitle());
+        String required = info.getParents().stream().map( it ->
+                holder.itemView.getContext().getResources().getString(it.getTitle()))
+                .collect(Collectors.joining( "," ));
         holder.descriptionView.setText(info.getDescription());
+        if (!required.trim().isEmpty()) {
+            holder.descriptionView.append("\n\nRequired: " + required);
+        }
         holder.coast.setText(String.valueOf(info.getCoast()));
         holder.pin.setOnClickListener(v -> {
             listener.onSelect(info);
@@ -64,6 +73,7 @@ public class RenderablesAdapter extends RecyclerView.Adapter<RenderablesAdapter.
             holder.pin.setEnabled(condition);
             Resources res = holder.itemView.getResources();
             holder.coast.setTextColor(condition? res.getColor(android.R.color.white) : res.getColor(android.R.color.holo_red_dark));
+            condition = condition && resources.getItems().keySet().containsAll(info.getParents());
             holder.itemView.setAlpha(condition? 1 : 0.5f);
         });
         holder.about.setOnClickListener(v-> PopupWindows.openInfoPopup(holder.itemView, info));

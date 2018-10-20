@@ -63,7 +63,7 @@ public class RaitingPopupFragment extends DialogFragment {
         public void onBindViewHolder(@NonNull PersonViewHolder holder, int position) {
             Pair<User,MyResources> item = data.get(position);
             holder.titleView.setText(item.first.getDisplayName());
-            holder.imageView.setImageURI(item.first.getUri());
+//            holder.imageView.setImageURI(item.first.getUri());
             holder.energyView.setText(String.valueOf(item.second.getEnergy()));
             holder.battleView.setText(String.valueOf(item.second.getForce()));
         }

@@ -33,8 +33,8 @@ public class User {
         this.displayName = displayName;
     }
 
-    public Uri getUri() {
-        return uri;
+    public String getUri() {
+        return uri.toString();
     }
 
     public void setUri(Uri uri) {
@@ -61,7 +61,7 @@ public class User {
         return "User{" +
                 "uuid='" + uuid + '\'' +
                 ", displayName='" + displayName + '\'' +
-                ", uri=" + uri +
+                ", uri=" + uri.toString() +
                 '}';
     }
 }

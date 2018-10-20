@@ -10,6 +10,17 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/force_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/ic_flash"
+            android:drawableTint="@android:color/holo_blue_dark"
+            app:layout_constraintEnd_toStartOf="@+id/energy_level"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/energy_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

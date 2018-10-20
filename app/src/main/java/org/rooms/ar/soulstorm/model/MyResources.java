@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyResources {
-    private static final byte BASIC_ENERGY = 100;
+    private static final int BASIC_ENERGY = 1100;
     private float energy;
     private long force;
     private Map<String, Integer> items = new HashMap<>();
@@ -64,6 +64,7 @@ public class MyResources {
     public MyResources increase() {
         for (String item : items.keySet()) {
             energy += Building.valueOf(item).getEnergyBoost() * items.get(item);
+            force += Building.valueOf(item).getBattleBoost() * items.get(item);
         }
         energy += 0.1;
         return new MyResources(Math.round(energy*10)/10f, force, items, dateTime);

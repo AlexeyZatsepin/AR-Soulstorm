@@ -22,15 +22,15 @@
         android:id="@+id/title_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#DE000000"
-        tools:text="Alexey Zatsepin"
-        app:layout_constraintTop_toTopOf="@+id/avatar_image"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/avatar_image"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/avatar_image"
+        tools:text="Alexey Zatsepin" />
 
     <TextView
         android:id="@+id/energy_text"
@@ -44,7 +44,6 @@
         android:drawableStart="@drawable/ic_flash"
         tools:text="100"
         app:layout_constraintStart_toEndOf="@+id/avatar_image"
-        app:layout_constraintEnd_toEndOf="+id/battle_text"
         app:layout_constraintBottom_toBottomOf="@+id/avatar_image" />
 
     <TextView
