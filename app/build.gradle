@@ -51,10 +51,12 @@ dependencies {
 
     implementation "com.google.firebase:firebase-core:$firebase_version"
     implementation "com.google.firebase:firebase-auth:$firebase_version"
-    implementation "com.google.firebase:firebase-database:16.0.3"
+    implementation "com.google.firebase:firebase-database:16.0.4"
 
     //noinspection GradleDependency
     implementation "com.airbnb.android:lottie:$lottie_version"
+
+    implementation "de.blox:graphview:$graph_view"
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'

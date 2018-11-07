@@ -9,12 +9,12 @@ import java.util.Objects;
 public class User {
     private String uuid;
     private String displayName;
-    private Uri uri;
+    private String uri;
 
     public User(FirebaseUser firebaseUser) {
         uuid = firebaseUser.getUid();
         displayName = firebaseUser.getDisplayName();
-        uri = firebaseUser.getPhotoUrl();
+        uri = firebaseUser.getPhotoUrl()!=null ? firebaseUser.getPhotoUrl().toString() : null;
     }
 
     public String getUuid() {
@@ -34,10 +34,10 @@ public class User {
     }
 
     public String getUri() {
-        return uri.toString();
+        return uri;
     }
 
-    public void setUri(Uri uri) {
+    public void setUri(String uri) {
         this.uri = uri;
     }
 
@@ -61,7 +61,7 @@ public class User {
         return "User{" +
                 "uuid='" + uuid + '\'' +
                 ", displayName='" + displayName + '\'' +
-                ", uri=" + uri.toString() +
+                ", uri=" + uri +
                 '}';
     }
 }
